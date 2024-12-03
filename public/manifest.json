@@ -1,6 +1,5 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "Lotus Root",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +17,11 @@
       "sizes": "512x512"
     }
   ],
+  "short_name": "Lotus",
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#FFF0E5",
+  "display_override": ["standalone", "minimal-ui"],
+  "display": "fullscreen",
+  "scope": "/",
+  "theme_color": "#281611"
 }

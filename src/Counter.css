@@ -1,0 +1,33 @@
+.Counter {
+    text-align: center;
+}
+
+.Counter-header {
+    background_color: #FFF0E5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 5vmin);
+    color: 281611;
+}
+
+.Tester {
+    color: green;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .Tester {
+        animation: Tester-logo-spin infinite 20s linear;
+    }
+}
+
+@keyframes Tester-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
