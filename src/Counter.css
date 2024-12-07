@@ -3,14 +3,14 @@
 }
 
 .Counter-header {
-    background_color: #FFF0E5;
+    background-color: #fff0e5;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 5vmin);
-    color: 281611;
+    color: #281611;
 }
 
 .Tester {
