@@ -22,7 +22,7 @@ function Counter(props) {
                     <span> {count} </span>
                     <Button variant="contained" onClick={decrement}>-</Button>
                     <p>
-                        This page was wrritten on <code>Counter.jsx</code>.
+                        This page was written on <code>Counter.jsx</code>.
                     </p>
                     <h1 className="Tester">ahhh</h1>
                 </div>
