@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import TinderCard, { displayName } from 'react-tinder-card';
 
-const SwipeCards = ({ profiles }) => {
+function SwipeCards (profiles) {
     const [lastDirection, setLastDirection] = useState('');
 
     const swiped = (direction, displayName) => {
