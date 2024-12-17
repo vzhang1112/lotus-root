@@ -1,12 +1,31 @@
 import React, {useState} from 'react';
-import TinderCard, { displayName } from 'react-tinder-card';
+import TinderCard from 'react-tinder-card';
+import { supabase } from '../utils/supabase.ts'
 
-function SwipeCards (profiles) {
+function SwipeCards ({ profiles }) {
+  // profiles are passed in from the jsx file that this is implemented in
+  /* TODO: 
+  based on who's logged in, we know who the swiper is 
+  1. project account name from supabase onto displayName used in TinderCard
+  2. use that supabase acct info to apply to swipes db
+  */ 
     const [lastDirection, setLastDirection] = useState('');
 
-    const swiped = (direction, displayName) => {
+    const retrieveName = (profiles) => {
+      
+    }
+
+    const swiped = async (direction, displayName) => {
         console.log('${displayName} swiped ${direction}');
         setLastDirection(direction);
+
+      const { data, error } = await supabase
+      .from('swipes')
+      .insert ([
+        { display_name: displayName, 
+          direction: direction },
+      ]);
+      if (error) console.error('Error saving swipe: ', error);
     };
 
     const outOfFrame = (displayName) => {
