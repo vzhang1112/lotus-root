@@ -14,23 +14,46 @@ const Auth = () => {
     // login screen details start
     const [isLogin, setIsLogin] = useState(''); // toggles bt login & signup
     const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
 
     const handleAuth = async(e) => {
+        e.preventDefault();
+        // clear out all previous messages
+        setMessage('');
+        setError('');
+
         // e refers to any event
         let result;
         if (isLogin) {
             // login user
             result = await supabase.auth
             .signInWithPassword({ email, password });
+
+            // if credentials are wrong
+            if (error) {
+                if (error.message.includes('Invalid login credentials')) {
+                    setError('Incorrect email or password. Please try again.');
+                } else if (error.message.includes('User not confirmed')) {
+                    setError('Your email is not verified, please check inbox')
+                } else {
+                    setError('An unexpected error occurred. Please try again later');
+                }
+                // prevents further execution
+                return;
+            }
+            // within the isLogin if statement, if login is successful
+            setMessage('Logged in successfully');
         } else { 
             // handle signup
             result = await supabase.auth
             .signUp ({ email, password });
+            
             if (!result.error) {
                 // create profile
                 const { user } = result.data;
 
                 // creating new profile with given info
+                const { error: profileError } = 
                 await supabase.from('profiles').insert([{
                     user_id: user.id,
                     display_name: displayName,
@@ -46,6 +69,9 @@ const Auth = () => {
                     setMessage('Sign-up successful, but error creating profile');
                     return;
                 }
+            } else {
+                setError(error.message);
+                return;
             }
         }
 
@@ -83,7 +109,7 @@ const Auth = () => {
                         type="text"
                         placeholder="Display Name"
                         value={displayName}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setDisplayName(e.target.value)}
                         required
                     />
                     <textarea
@@ -121,6 +147,9 @@ const Auth = () => {
                 )}
                 <button type="submit">{isLogin? 'Login' : 'Sign Up'}</button>
             </form>
+
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {message && <p style={{ color: 'green' }}>{message}</p>}
             <p>
                 {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
                 <button onClick={() => setIsLogin(!isLogin)}>
