@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCurrentUser } from '../../utils/supabase';
+import { supabase } from '../utils/supabase.ts';
+import { getCurrentUser } from '../utils/supabase.ts';
 
 function Home() {
     const [user, setUser] = useState(null);
