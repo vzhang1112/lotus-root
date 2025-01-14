@@ -1,49 +1,61 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { supabase } from '../utils/supabase.ts'; // Adjust the import path as needed
+import Home from './components/Home';
+import Auth from './components/Auth';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
-import Home from './pages/Home';
-import Auth from './components/Auth';
-import Profile from './pages/Profile';
-import { supabase } from './utils/supabase.ts';
+import Profile from './components/Profile';
+import CreateProfile from './components/CreateProfile';
 
-function App() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+const App = () => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user || null);
-      setLoading(false);
-    };
-    
-    fetchUser();
+    useEffect(() => {
+        const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user || null);
+            setLoading(false);
+        });
 
-    // subscribe to authentication state changes
-    const { data: subscription } = supabase.auth.onAuthStateChange((_event,session) => {
-      setUser(session?.user || null);
-    });
+        return () => subscription?.unsubscribe?.();
+    }, []);
 
-    return () => subscription.unsubscribe();
-  }, []);
+    if (loading) return <p>Loading...</p>;
 
-  if (loading) return <p>Loading...</p>
+    return (
+        <Router>
+            <Routes>
+                {/* public routes */}
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={!user ? <Auth /> : <Navigate to="/profile" />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
 
-  return (
-    <Router>
-      <Routes>
-        // public routes
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={!user ? <Auth /> : <Navigate to="/profile" />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="reset-password" element={<ResetPassword />} />
-
-        // Protected route
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
-    </Router>
-  );
-}
+                {/* protected routes */}
+                <Route
+                    path="/profile"
+                    element={
+                        user && user.email_confirmed_at ? (
+                            <Profile />
+                        ) : (
+                            <Navigate to="/login" />
+                        )
+                    }
+                />
+                <Route
+                    path="/create-profile"
+                    element={
+                        user && user.email_confirmed_at ? (
+                            <CreateProfile />
+                        ) : (
+                            <Navigate to="/login" />
+                        )
+                    }
+                />
+            </Routes>
+        </Router>
+    );
+};
 
 export default App;

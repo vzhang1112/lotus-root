@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
 import { supabase } from '../utils/supabase.ts'; // Adjust the import path as needed
-import { createProfile } from './Profile'; // Adjust the import path as needed
 
 const Auth = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [displayName, setDisplayName] = useState('');
-    const [bio, setBio] = useState('');
-    const [gradYear, setGradYear] = useState('');
-    const [industry, setIndustry] = useState('');
-    const [company, setCompany] = useState('');
-    const [position, setPosition] = useState('');
     const [isLogin, setIsLogin] = useState(''); // toggles between login & signup
     const [message, setMessage] = useState('');
     const [authError, setAuthError] = useState('');
@@ -44,29 +37,16 @@ const Auth = () => {
                 setMessage('Logged in successfully');
             } else {
                 // handle signup
-                result = await supabase.auth.signUp({ email, password });
+                result = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        emailRedirectTo: 'http://localhost:3000/welcome', // Adjust the URL as needed
+                    },
+                });
 
                 if (!result.error) {
-                    // create profile
-                    const { user } = result.data;
-
-                    // creating new profile with given info
-                    const profileData = {
-                        displayName,
-                        bio,
-                        gradYear,
-                        industry,
-                        company,
-                        position
-                    };
-
-                    const profileResult = await createProfile(user, profileData);
-
-                    if (!profileResult.success) {
-                        setMessage('Sign-up successful, but error creating profile');
-                        return;
-                    }
-                    setMessage('Signed up successfully');
+                    setMessage('Signed up successfully. Please check your email to verify your account.');
                 } else {
                     setAuthError(result.error.message);
                     return;
@@ -91,53 +71,15 @@ const Auth = () => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
             />
             <input
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
             />
-            {!isLogin && (
-                <>
-                    <input
-                        type="text"
-                        placeholder="Display Name"
-                        value={displayName}
-                        onChange={(e) => setDisplayName(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Bio"
-                        value={bio}
-                        onChange={(e) => setBio(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Graduation Year"
-                        value={gradYear}
-                        onChange={(e) => setGradYear(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Industry"
-                        value={industry}
-                        onChange={(e) => setIndustry(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Company"
-                        value={company}
-                        onChange={(e) => setCompany(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Position"
-                        value={position}
-                        onChange={(e) => setPosition(e.target.value)}
-                    />
-                </>
-            )}
             <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
             <button type="button" onClick={() => setIsLogin(!isLogin)}>
                 {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
