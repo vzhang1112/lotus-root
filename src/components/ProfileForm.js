@@ -8,8 +8,9 @@
 
 
 import React, { useState } from 'react';
-import { supabase } from '../utils/supabase.ts'; // Adjust the import path as needed
-import { createProfile } from '../utils/profileUtils.js'; // Adjust the import path as needed
+import { supabase } from '../utils/supabase.ts';
+import { createProfile } from '../utils/profileUtils.js';
+import { useBackNavigation } from '../utils/navigationUtils.js';
 
 
 /**
@@ -34,6 +35,8 @@ const ProfileForm = () => {
     const [position, setPosition] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+
+    const handleBack = useBackNavigation();
 
     const handleProfileCreation = async (e) => {
         e.preventDefault();
@@ -67,6 +70,7 @@ const ProfileForm = () => {
 
     return (
         <form onSubmit={handleProfileCreation}>
+            <button type="button" onClick={handleBack}>Back</button>
             <input
                 type="text"
                 placeholder="Display Name"

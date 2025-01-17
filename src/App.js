@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { supabase } from '../utils/supabase.ts'; // Adjust the import path as needed
-import Home from './components/Home';
+import { supabase } from './utils/supabase.ts'; // Adjust the import path as needed
+import Home from './pages/Home';
 import Auth from './components/Auth';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Profile from './components/Profile';
-import CreateProfile from './components/CreateProfile';
+import CreateProfile from './components/ProfileForm';
 
 const App = () => {
     const [user, setUser] = useState(null);
