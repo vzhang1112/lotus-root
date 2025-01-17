@@ -25,6 +25,7 @@ function Home() {
             <button onClick={() => supabase.auth.signOut().then(() => navigate('/login'))}>
                 Logout
             </button>
+            <button onClick={() => navigate('/profile')}>View profile</button>
         </div>
     ) : (
         <p>Loading...</p>

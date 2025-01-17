@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Auth from './components/Auth';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
-import Profile from './components/Profile';
+import Profile from './pages/Profile.js';
 import CreateProfile from './components/ProfileForm';
 
 const App = () => {
