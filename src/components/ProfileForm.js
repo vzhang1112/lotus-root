@@ -43,7 +43,12 @@ const ProfileForm = () => {
         setMessage('');
         setError('');
 
-        const user = supabase.auth.user();
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+        if (userError) {
+            setError('Error fetching user: ' + userError.message);
+            return;
+        }
 
         if (!user) {
             setError('User not authenticated');
@@ -51,6 +56,7 @@ const ProfileForm = () => {
         }
 
         const profileData = {
+            user_id: user.id,
             displayName,
             bio,
             gradYear,
@@ -59,7 +65,10 @@ const ProfileForm = () => {
             position,
         };
 
-        const profileResult = await createProfile(user, profileData);
+        console.log('Profile Data:', profileData);
+
+        // const profileResult = await createProfile(user, profileData);
+        const profileResult = await createProfile(profileData);
 
         if (!profileResult.success) {
             setError('Error creating profile: ' + profileResult.error.message);

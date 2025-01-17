@@ -5,20 +5,39 @@ import Home from './pages/Home';
 import Auth from './components/Auth';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
-import Profile from './pages/Profile.js';
-import CreateProfile from './components/ProfileForm';
+import Profile from './pages/Profile'; // Adjust the import path as needed
+import ProfileForm from './components/ProfileForm';
+import { getProfile } from './utils/profileUtils'; // Adjust the import path as needed
 
 const App = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [profileInitialized, setProfileInitialized] = useState(false);
 
     useEffect(() => {
-        const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
-            setUser(session?.user || null);
-            setLoading(false);
-        });
+        const fetchUserAndProfile = async () => {
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-        return () => subscription?.unsubscribe?.();
+            if (userError) {
+                console.error('Error fetching user:', userError.message);
+                setLoading(false);
+                return;
+            }
+
+            setUser(user);
+
+            if (user && user.email_confirmed_at) {
+                const profileResult = await getProfile(user.id);
+
+                if (profileResult.success && profileResult.data) {
+                    setProfileInitialized(true);
+                }
+            }
+
+            setLoading(false);
+        };
+
+        fetchUserAndProfile();
     }, []);
 
     if (loading) return <p>Loading...</p>;
@@ -37,7 +56,11 @@ const App = () => {
                     path="/profile"
                     element={
                         user && user.email_confirmed_at ? (
-                            <Profile />
+                            profileInitialized ? (
+                                <Profile />
+                            ) : (
+                                <Navigate to="/create-profile" />
+                            )
                         ) : (
                             <Navigate to="/login" />
                         )
@@ -47,7 +70,7 @@ const App = () => {
                     path="/create-profile"
                     element={
                         user && user.email_confirmed_at ? (
-                            <CreateProfile />
+                            <ProfileForm />
                         ) : (
                             <Navigate to="/login" />
                         )

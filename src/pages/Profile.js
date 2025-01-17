@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabase.ts'; // Adjust the import path as needed
 import { useBackNavigation } from '../utils/navigationUtils'; // Adjust the import path as needed
+import { getProfile } from '../utils/profileUtils'; // Adjust the import path as needed
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
@@ -21,16 +22,12 @@ const Profile = () => {
                 return;
             }
 
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', user.id)
-                .single();
+            const profileResult = await getProfile(user.id);
 
-            if (error) {
-                setError('Error fetching profile: ' + error.message);
+            if (!profileResult.success) {
+                setError('Error fetching profile: ' + profileResult.error.message);
             } else {
-                setProfile(data);
+                setProfile(profileResult.data);
             }
         };
 

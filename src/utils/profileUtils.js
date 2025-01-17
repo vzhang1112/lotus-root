@@ -13,30 +13,34 @@
  */
 
 
-import { supabase } from '../utils/supabase.ts'; // Adjust the import path as needed
+import { supabase } from '../utils/supabase.ts';
 
 /**
- * Creates a user profile in the database.
+ * Updates the profile of a user in the database.
  *
  * @param {Object} user - The user object containing user details.
- * @param {Object} profileData - The profile data to be inserted.
+ * @param {Object} profileData - The profile data to update.
  * @param {string} profileData.displayName - The display name of the user.
  * @param {string} profileData.bio - The bio of the user.
  * @param {number} profileData.gradYear - The graduation year of the user.
  * @param {string} profileData.industry - The industry the user works in.
  * @param {string} profileData.company - The company the user works for.
  * @param {string} profileData.position - The position of the user in the company.
- * @returns {Promise<Object>} A promise that resolves to an object indicating success or failure.
+ * @returns {Promise<Object>} A promise that resolves to an object indicating the success or failure of the update operation.
+ * @returns {Promise<Object.success>} A boolean indicating if the update was successful.
+ * @returns {Promise<Object.error>} An error object if the update failed.
  */
-export const createProfile = async (user, profileData) => {
-    const { displayName, bio, gradYear, industry, company, position } = profileData;
+export const createProfile = async (profileData) => {
+    const { user_id, displayName, bio, gradYear, industry, company, position } = profileData;
+
+    console.log('Creating profile with data:', profileData);
 
     try {
         const { error: insertError } = await supabase
             .from('profiles')
             .insert([
                 {
-                    id: user.id,
+                    user_id: user_id,
                     display_name: displayName,
                     bio: bio,
                     grad_year: gradYear,
@@ -55,50 +59,6 @@ export const createProfile = async (user, profileData) => {
         }
     } catch (error) {
         console.error('Unexpected error creating profile:', error);
-        return { success: false, error };
-    }
-};
-
-/**
- * Updates the profile of a user in the database.
- *
- * @param {Object} user - The user object containing user details.
- * @param {Object} profileData - The profile data to update.
- * @param {string} profileData.displayName - The display name of the user.
- * @param {string} profileData.bio - The bio of the user.
- * @param {number} profileData.gradYear - The graduation year of the user.
- * @param {string} profileData.industry - The industry the user works in.
- * @param {string} profileData.company - The company the user works for.
- * @param {string} profileData.position - The position of the user in the company.
- * @returns {Promise<Object>} A promise that resolves to an object indicating the success or failure of the update operation.
- * @returns {Promise<Object.success>} A boolean indicating if the update was successful.
- * @returns {Promise<Object.error>} An error object if the update failed.
- */
-export const updateProfile = async (user, profileData) => {
-    const { displayName, bio, gradYear, industry, company, position } = profileData;
-
-    try {
-        const { error: updateError } = await supabase
-            .from('profiles')
-            .update({
-                display_name: displayName,
-                bio: bio,
-                grad_year: gradYear,
-                industry: industry,
-                company: company,
-                position: position,
-            })
-            .eq('id', user.id);
-
-        if (updateError) {
-            console.error('Error updating profile:', updateError);
-            return { success: false, error: updateError };
-        } else {
-            console.log('Profile updated successfully');
-            return { success: true };
-        }
-    } catch (error) {
-        console.error('Unexpected error updating profile:', error);
         return { success: false, error };
     }
 };
