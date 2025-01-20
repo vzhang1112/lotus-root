@@ -63,30 +63,4 @@ export const createProfile = async (profileData) => {
     }
 };
 
-
-/**
- * Fetches the profile of a user by their user ID.
- *
- * @param {string} userId - The ID of the user whose profile is to be fetched.
- * @returns {Promise<{success: boolean, data?: object, error?: object}>} 
- *          A promise that resolves to an object indicating the success status and either the profile data or an error.
- */
-export const getProfile = async (userId) => {
-    try {
-        const { data, error } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', userId)
-            .single();
-
-        if (error) {
-            console.error('Error fetching profile:', error);
-            return { success: false, error };
-        } else {
-            return { success: true, data };
-        }
-    } catch (error) {
-        console.error('Unexpected error fetching profile:', error);
-        return { success: false, error };
-    }
-};
+// TODO: going to use this file for functions to edit existing profiles

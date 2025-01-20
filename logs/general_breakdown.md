@@ -3,7 +3,7 @@
 ## Description of what I want this to do
 
 * User login
-    * Create an account
+    * x Create an account
     * Recover password
     * Change password
     * Delete account
@@ -11,15 +11,19 @@
     * Switch between job seeker and host
     * Save interests as metadata for suggestion sort
 * Own profile management
-    * Initialize a profile
-    * View profile
-    * Edit profile
+    * x Initialize a profile
+    * x View profile
+    * x Edit profile
     * Share profile
-    * Preview swipe cards
+* Swipe card management
+    * Add and answer questions to form profile
+    * Add photos
+    * Personal storytelling
 * Profile display details
-    * Name
-    * Industry
-    * Company
+    * x Name
+    * x Industry
+    * x Company
+    * Photos
 * Swipe card functionality
     * Swipe
     * Scroll

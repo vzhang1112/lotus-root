@@ -8,6 +8,7 @@
 
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../utils/supabase.ts';
 import { createProfile } from '../utils/profileUtils.js';
 import { useBackNavigation } from '../utils/navigationUtils.js';
@@ -36,6 +37,7 @@ const ProfileForm = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
+    const navigate = useNavigate();
     const handleBack = useBackNavigation();
 
     const handleProfileCreation = async (e) => {
@@ -74,6 +76,7 @@ const ProfileForm = () => {
             setError('Error creating profile: ' + profileResult.error.message);
         } else {
             setMessage('Profile created successfully');
+            navigate('/profile');
         }
     };
 

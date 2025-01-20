@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { supabase } from './utils/supabase.ts'; // Adjust the import path as needed
+import { supabase } from './utils/supabase.ts';
 import Home from './pages/Home';
 import Auth from './components/Auth';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
-import Profile from './pages/Profile'; // Adjust the import path as needed
+import Profile from './pages/Profile';
 import ProfileForm from './components/ProfileForm';
-import { getProfile } from './utils/profileUtils'; // Adjust the import path as needed
+import { getFromSupabase } from './utils/supabaseUtils.js';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -27,7 +27,7 @@ const App = () => {
             setUser(user);
 
             if (user && user.email_confirmed_at) {
-                const profileResult = await getProfile(user.id);
+                const profileResult = await getFromSupabase(user.id, "profiles");
 
                 if (profileResult.success && profileResult.data) {
                     setProfileInitialized(true);
@@ -59,7 +59,7 @@ const App = () => {
                             profileInitialized ? (
                                 <Profile />
                             ) : (
-                                <Navigate to="/create-profile" />
+                                <Navigate to="/edit-profile" />
                             )
                         ) : (
                             <Navigate to="/login" />
@@ -67,7 +67,7 @@ const App = () => {
                     }
                 />
                 <Route
-                    path="/create-profile"
+                    path="/edit-profile"
                     element={
                         user && user.email_confirmed_at ? (
                             <ProfileForm />

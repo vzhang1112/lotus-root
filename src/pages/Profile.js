@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../utils/supabase.ts'; // Adjust the import path as needed
-import { useBackNavigation } from '../utils/navigationUtils'; // Adjust the import path as needed
-import { getProfile } from '../utils/profileUtils'; // Adjust the import path as needed
+import { supabase } from '../utils/supabase.ts';
+import { useBackNavigation } from '../utils/navigationUtils';
+import { getFromSupabase } from '../utils/supabaseUtils.js';
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
@@ -22,7 +22,7 @@ const Profile = () => {
                 return;
             }
 
-            const profileResult = await getProfile(user.id);
+            const profileResult = await getFromSupabase(user.id, "profile");
 
             if (!profileResult.success) {
                 setError('Error fetching profile: ' + profileResult.error.message);
@@ -51,6 +51,8 @@ const Profile = () => {
             <p>{profile.industry}</p>
             <p>{profile.company}</p>
             <p>{profile.position}</p>
+            {/* TODO: edit-profile doesn't work bc currently links to create-profile */}
+            <button onClick={() => Navigate('/edit-profile')}>Edit Profile</button>
         </div>
     );
 };
