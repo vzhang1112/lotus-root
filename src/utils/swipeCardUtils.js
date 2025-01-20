@@ -1,8 +1,8 @@
-import { supabase } from '../utils/supabase.ts';
+import { supabase } from './supabase.ts';
 
 export const createSwipeCard = async (swipeCardData) => {
     const { user_id, role, availability, question1, answer1, question2, answer2,
-        question3, answer3 } = swipeCardData;
+        question3, answer3, personal_blurb } = swipeCardData;
 
     console.log('Creating swipe card with data:', swipeCardData);
 
@@ -13,13 +13,14 @@ export const createSwipeCard = async (swipeCardData) => {
                 {
                     user_id: user_id,
                     role: role,
-                    availbility: availability,
+                    availability: availability,
                     question1: question1,
                     answer1: answer1,
                     question2: question2,
                     answer2: answer2,
                     question3: question3,
-                    answer3: answer3
+                    answer3: answer3,
+                    personal_blurb: personal_blurb
                 },
             ]);
 
@@ -36,4 +37,40 @@ export const createSwipeCard = async (swipeCardData) => {
     }
 };
 
-// TODO: going to use this file for functions to edit existing swipecards
+
+export const updateSwipeCard = async (user_id, swipeCardData) => {
+    const { user_id, role, availability, question1, answer1, question2, answer2,
+        question3, answer3, personal_blurb } = swipeCardData;
+
+    console.log('Updating swipe card for user ID:', user_id, 'with data:', swipeCardData);
+
+    try {
+        const { error: updateError } = await supabase
+            .from('swipecards')
+            .update([
+                {
+                    role: role,
+                    availability: availability,
+                    question1: question1,
+                    answer1: answer1,
+                    question2: question2,
+                    answer2: answer2,
+                    question3: question3,
+                    answer3: answer3,
+                    personal_blurb: personal_blurb
+                },
+            ])
+            .eq('user_id', user_id);
+
+        if (updateError) {
+            console.error('Error updating swipe card:', updateError);
+            return { success: false, error: updateError };
+        } else {
+            console.log('Swipe card updated successfully');
+            return { success: true };
+        }
+    } catch (error) {
+        console.error('Unexpected error updating swipe card:', error);
+        return { success: false, error };
+    }
+};

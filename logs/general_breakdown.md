@@ -16,9 +16,9 @@
     * x Edit profile
     * Share profile
 * Swipe card management
-    * Add and answer questions to form profile
+    * x Add and answer questions to form profile
     * Add photos
-    * Personal storytelling
+    * x Personal storytelling
 * Profile display details
     * x Name
     * x Industry
