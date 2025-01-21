@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBackNavigation } from '../utils/navigationUtils';
 import { supabase } from '../utils/supabase.ts';
@@ -134,7 +134,8 @@ const SwipeCardForm = () => {
 
         let swipeCardResult;
         if (isUpdating) {
-            swipeCardResult = await updateSwipeCard(user.id, swipeCardData);
+            // swipeCardResult = await updateSwipeCard(user.id, swipeCardData);
+            swipeCardResult = await updateSwipeCard(swipeCardData);
         } else {
             swipeCardResult = await createSwipeCard(swipeCardData);
         }

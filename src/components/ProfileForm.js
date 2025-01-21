@@ -7,12 +7,13 @@
  */
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../utils/supabase.ts';
 import { getFromSupabase } from '../utils/supabaseUtils.js';
 import { createProfile, updateProfile } from '../utils/profileUtils.js';
 import { useBackNavigation } from '../utils/navigationUtils.js';
+import { HR_FIELDS } from '../utils/constants.ts';
 
 
 /**
@@ -119,7 +120,6 @@ const ProfileForm = () => {
 
     return (
         <form onSubmit={handleProfileCreation}>
-            <button type="button" onClick={handleBack}>Back</button>
             <input
                 type="text"
                 placeholder="Display Name"

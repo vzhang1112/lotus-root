@@ -1,4 +1,6 @@
+import React, { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabase.ts';
+import { Navigate } from 'react-router-dom';
 import { useBackNavigation } from '../utils/navigationUtils';
 import { getFromSupabase } from '../utils/supabaseUtils';
 

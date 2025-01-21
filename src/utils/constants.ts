@@ -1,4 +1,4 @@
-const PRESET_QUESTIONS = [
+export const PRESET_QUESTIONS = [
     'What is your favorite hobby?',
     'What is your dream job?',
     'What is your favorite book?',
@@ -6,10 +6,10 @@ const PRESET_QUESTIONS = [
     'What is your favorite travel destination?',
 ] as Array<string>;
 
-const LONG_LIMIT = 50 as number;
-const SHORT_LIMIT = 20 as number;
+export const LONG_LIMIT = 50 as number;
+export const SHORT_LIMIT = 20 as number;
 
-const HR_FIELDS = [
+export const HR_FIELDS = [
     'Compensation',
     'Health and Safety',
     'HR Business and Strategy',
@@ -19,4 +19,4 @@ const HR_FIELDS = [
     'Performance Management',
     'Recruitment and Selection',
     'Training and Development'
-]
+] as Array<string>;

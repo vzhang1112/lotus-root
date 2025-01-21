@@ -7,6 +7,9 @@ import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Profile from './pages/Profile';
 import ProfileForm from './components/ProfileForm';
+import SwipeCard from './pages/SwipeCard';
+import SwipeCardForm from './components/SwipeCardForm.js';
+import NavBar from './components/NavBar';
 import { getFromSupabase } from './utils/supabaseUtils.js';
 
 const App = () => {
@@ -53,6 +56,7 @@ const App = () => {
 
     return (
         <Router>
+            <NavBar />
             <Routes>
                 {/* public routes */}
                 <Route path="/" element={<Home />} />
