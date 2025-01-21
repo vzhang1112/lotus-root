@@ -1,6 +1,6 @@
 /**
  * @fileoverview This file contains the ProfileForm component, which is a React functional component
- * that allows users to create a profile by filling out a form with their display name, bio, graduation year,
+ * that allows users to create a profile by filling out a form with their display name, hr focus, graduation year,
  * industry, company, and position. The component uses Supabase for authentication and profile creation.
  * It manages form state using React's useState hook and handles form submission with an asynchronous function.
  * If the profile creation is successful, a success message is displayed; otherwise, an error message is shown.
@@ -17,7 +17,7 @@ import { useBackNavigation } from '../utils/navigationUtils.js';
 
 /**
  * ProfileForm component allows users to create a profile by filling out a form.
- * The form includes fields for display name, bio, graduation year, industry, company, and position.
+ * The form includes fields for display name, hr focus, graduation year, industry, company, and position.
  * Upon submission, it handles profile creation by calling the `ProfileForm` function with the user's data.
  * 
  * @component
@@ -30,7 +30,7 @@ import { useBackNavigation } from '../utils/navigationUtils.js';
  */
 const ProfileForm = () => {
     const [displayName, setDisplayName] = useState('');
-    const [bio, setBio] = useState('');
+    const [hrFocus, setHrFocus] = useState('');
     const [gradYear, setGradYear] = useState('');
     const [industry, setIndustry] = useState('');
     const [company, setCompany] = useState('');
@@ -61,7 +61,7 @@ const ProfileForm = () => {
             if (profileResult.success && profileResult.data) {
                 const profile = profileResult.data;
                 setDisplayName(profile.display_name);
-                setBio(profile.bio);
+                setHrFocus(profile.hrFocus);
                 setGradYear(profile.grad_year);
                 setIndustry(profile.industry);
                 setCompany(profile.company);
@@ -93,7 +93,7 @@ const ProfileForm = () => {
         const profileData = {
             user_id: user.id,
             displayName,
-            bio,
+            hrFocus,
             gradYear,
             industry,
             company,
@@ -127,13 +127,14 @@ const ProfileForm = () => {
                 onChange={(e) => setDisplayName(e.target.value)}
                 required
             />
-            <input
-                type="text"
-                placeholder="Bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                required
-            />
+            <select 
+                value={hrFocus}
+                >
+                    <option value="">Choose your HR focus</option>
+                    {HR_FIELDS.map((HR_FIELDS, i) => (
+                        <option key={i} value={HR_FIELDS}>{HR_FIELDS}</option>
+                    ))}
+                </select>
             <input
                 type="text"
                 placeholder="Graduation Year"

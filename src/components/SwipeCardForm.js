@@ -4,7 +4,7 @@ import { useBackNavigation } from '../utils/navigationUtils';
 import { supabase } from '../utils/supabase.ts';
 import { getFromSupabase } from '../utils/supabaseUtils';
 import { createSwipeCard, updateSwipeCard } from '../utils/swipeCardUtils';
-import { presetQuestions, LONG_LIMIT, SHORT_LIMIT } from '../utils/constants.ts';
+import { PRESET_QUESTIONS, LONG_LIMIT, SHORT_LIMIT } from '../utils/constants.ts';
 
 const SwipeCardForm = () => {
     const [availability, setAvailability] = useState('');
@@ -162,8 +162,8 @@ const SwipeCardForm = () => {
                         onChange={(e) => handlePresetQuestionChange(index, e.target.value)}
                         >
                             <option value="">Select a question</option>
-                            {presetQuestions.map((presetQuestion, i) => (
-                                <option key={i} value={presetQuestion}>{presetQuestion}</option>
+                            {PRESET_QUESTIONS.map((PRESET_QUESTIONS, i) => (
+                                <option key={i} value={PRESET_QUESTIONS}>{PRESET_QUESTIONS}</option>
                             ))}
                         </select>
                     <input

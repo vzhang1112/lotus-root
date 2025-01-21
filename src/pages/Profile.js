@@ -46,7 +46,7 @@ const Profile = () => {
         <div>
             <button type="button" onClick={handleBack}>Back</button>
             <h1>{profile.display_name}</h1>
-            <p>{profile.bio}</p>
+            <p>{profile.hr_focus}</p>
             <p>{profile.grad_year}</p>
             <p>{profile.industry}</p>
             <p>{profile.company}</p>

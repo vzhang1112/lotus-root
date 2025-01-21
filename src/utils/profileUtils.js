@@ -21,7 +21,7 @@ import { supabase } from './supabase.ts';
  * @param {Object} user - The user object containing user details.
  * @param {Object} profileData - The profile data to update.
  * @param {string} profileData.displayName - The display name of the user.
- * @param {string} profileData.bio - The bio of the user.
+ * @param {string} profileData.hrFocus - The HR focus of the user.
  * @param {number} profileData.gradYear - The graduation year of the user.
  * @param {string} profileData.industry - The industry the user works in.
  * @param {string} profileData.company - The company the user works for.
@@ -31,7 +31,7 @@ import { supabase } from './supabase.ts';
  * @returns {Promise<Object.error>} An error object if the update failed.
  */
 export const createProfile = async (profileData) => {
-    const { user_id, displayName, bio, gradYear, industry, company, position } = profileData;
+    const { user_id, displayName, hrFocus, gradYear, industry, company, position } = profileData;
 
     console.log('Creating profile with data:', profileData);
 
@@ -42,7 +42,7 @@ export const createProfile = async (profileData) => {
                 {
                     user_id: user_id,
                     display_name: displayName,
-                    bio: bio,
+                    hr_focus: hrFocus,
                     grad_year: gradYear,
                     industry: industry,
                     company: company,
@@ -69,7 +69,7 @@ export const createProfile = async (profileData) => {
  * @param {string} user_id - The ID of the user whose profile is to be updated.
  * @param {Object} profileData - The profile data to update.
  * @param {string} profileData.displayName - The display name of the user.
- * @param {string} profileData.bio - The bio of the user.
+ * @param {string} profileData.hrFocus - The HR focus of the user.
  * @param {number} profileData.gradYear - The graduation year of the user.
  * @param {string} profileData.industry - The industry the user works in.
  * @param {string} profileData.company - The company the user works for.
@@ -79,7 +79,7 @@ export const createProfile = async (profileData) => {
  * @returns {Promise<Object.error>} An error object if the update failed.
  */
 export const updateProfile = async (user_id, profileData) => {
-    const { displayName, bio, gradYear, industry, company, position } = profileData;
+    const { displayName, hrFocus, gradYear, industry, company, position } = profileData;
 
     console.log('Updating profile for user ID:', user_id, 'with data:', profileData);
 
@@ -88,7 +88,7 @@ export const updateProfile = async (user_id, profileData) => {
             .from('profiles')
             .update({
                 display_name: displayName,
-                bio: bio,
+                hr_focus: hrFocus,
                 grad_year: gradYear,
                 industry: industry,
                 company: company,
