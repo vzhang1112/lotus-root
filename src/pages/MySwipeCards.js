@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabase.ts';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SwipeCard from '../components/SwipeCard.js';
 
 const MySwipeCards = () => {
     const [swipeCards, setSwipeCards] = useState([]);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchSwipeCards = async () => {
@@ -21,8 +22,8 @@ const MySwipeCards = () => {
                 return;
             }
 
-            const { mentorData, mentorError } = await supabase
-                .from('swipe_cards')
+            const { data: mentorData, error: mentorError } = await supabase
+                .from('swipecards')
                 .select('*')
                 .eq('user_id', user.id)
                 .eq('role', 'mentor');
@@ -32,8 +33,8 @@ const MySwipeCards = () => {
                 return;
             }
 
-            const { seekerData, seekerError } = await supabase
-            .from('swipe_cards')
+            const { data: seekerData, error: seekerError } = await supabase
+            .from('swipecards')
             .select('*')
             .eq('user_id', user.id)
             .eq('role', 'seeker');
@@ -43,6 +44,13 @@ const MySwipeCards = () => {
                 return;
             }
 
+
+            // Ensure mentorData and seekerData are defined
+            if (!mentorData || !seekerData) {
+                setError('Error: mentorData or seekerData is undefined');
+                return;
+            }
+            
             const combinedData = [...mentorData, ...seekerData];
             setSwipeCards(combinedData);
         };
@@ -50,7 +58,7 @@ const MySwipeCards = () => {
     }, []);
 
     const handleCreateMentorCard = () => {
-        Navigate('/create-swipe-card', {
+        navigate('/edit-swipe-card', {
             state: {
                 role: "mentor",
                 availability: "available",
@@ -59,7 +67,7 @@ const MySwipeCards = () => {
     };
 
     const handleCreateSeekerCard = () => {
-        Navigate('/create-swipe-card', {
+        navigate('/edit-swipe-card', {
             state: {
                 role: "seeker",
                 availability: "available",
@@ -77,7 +85,6 @@ const MySwipeCards = () => {
                 <p>Create your own swipe card!</p>
                 <button onClick={handleCreateMentorCard}>Become a mentor</button>
                 <button onClick={handleCreateSeekerCard}>Become a seeker</button>
-                <button></button>
             </div>
         );
     }

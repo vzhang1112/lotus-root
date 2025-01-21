@@ -12,6 +12,9 @@ const NavBar = () => {
                 <li className="navbar-item">
                     <Link to="/profile" className="navbar-link">Profile</Link>
                 </li>
+                <li className="navbar-item">
+                    <Link to="/my-swipe-cards" className="navbar-link">My Swipe Cards</Link>
+                </li>
             </ul>
         </nav>
     );

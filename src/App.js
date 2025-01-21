@@ -16,7 +16,7 @@ const App = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [profileInitialized, setProfileInitialized] = useState(false);
-    const [swipeCardInitialized, setSwipeCardInitialized] = useState(false);
+    // const [swipeCardInitialized, setSwipeCardInitialized] = useState(false);
 
     useEffect(() => {
         const fetchUserAndProfile = async () => {
@@ -38,13 +38,13 @@ const App = () => {
                 }
             }
 
-            if (user && user.profileResult) {
-                const swipeCardResult = await getFromSupabase(user.id, "swipe_cards");
+            // if (user && user.profileResult) {
+            //     const swipeCardResult = await getFromSupabase(user.id, "swipe_cards");
 
-                if (swipeCardResult.success && swipeCardResult.data) {
-                    setSwipeCardInitialized(true);
-                }
-            }
+            //     if (swipeCardResult.success && swipeCardResult.data) {
+            //         setSwipeCardInitialized(true);
+            //     }
+            // }
 
             setLoading(false);
         };
@@ -93,11 +93,7 @@ const App = () => {
                     path="/my-swipe-cards"
                     element={
                         user && user.email_confirmed_at ? (
-                            swipeCardInitialized ? (
-                                <MySwipeCards />
-                            ) : (
-                                <Navigate to="/edit-swipe-card" />
-                            )
+                            <MySwipeCards />
                         ) : (
                             <Navigate to="/login" />
                         )
