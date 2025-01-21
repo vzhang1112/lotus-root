@@ -10,7 +10,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../utils/supabase.ts';
-import { createProfile } from '../utils/profileUtils.js';
+import { getFromSupabase } from '../utils/supabaseUtils.js';
+import { createProfile, updateProfile } from '../utils/profileUtils.js';
 import { useBackNavigation } from '../utils/navigationUtils.js';
 
 
@@ -36,9 +37,41 @@ const ProfileForm = () => {
     const [position, setPosition] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [isUpdating, setisUpdating] = useState(false);
 
     const navigate = useNavigate();
     const handleBack = useBackNavigation();
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+            if (userError) {
+                setError('Error fetching user: ' + userError.message);
+                return;
+            }
+
+            if (!user) {
+                setError('User not authenticated');
+                return;
+            }
+
+            const profileResult = await getFromSupabase(user.id, "profile");
+
+            if (profileResult.success && profileResult.data) {
+                const profile = profileResult.data;
+                setDisplayName(profile.display_name);
+                setBio(profile.bio);
+                setGradYear(profile.grad_year);
+                setIndustry(profile.industry);
+                setCompany(profile.company);
+                setPosition(profile.position);
+                setisUpdating(true);
+        }
+    };
+
+    fetchProfile();
+}, []);
 
     const handleProfileCreation = async (e) => {
         e.preventDefault();
@@ -69,8 +102,12 @@ const ProfileForm = () => {
 
         console.log('Profile Data:', profileData);
 
-        // const profileResult = await createProfile(user, profileData);
-        const profileResult = await createProfile(profileData);
+        let profileResult;
+        if (isUpdating) {
+            profileResult = await updateProfile(user.id, profileData);
+        } else {
+            profileResult = await createProfile(profileData);
+        }
 
         if (!profileResult.success) {
             setError('Error creating profile: ' + profileResult.error.message);
@@ -125,7 +162,8 @@ const ProfileForm = () => {
                 onChange={(e) => setPosition(e.target.value)}
                 required
             />
-            <button type="submit">Create Profile</button>
+            <button type="submit">{isUpdating ? 'Update Profile' : 'Create Profile'}</button>
+            <button type="button" onClick={handleBack}>Cancel without saving</button>
             {message && <p>{message}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>

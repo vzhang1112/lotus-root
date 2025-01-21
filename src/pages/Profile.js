@@ -51,7 +51,6 @@ const Profile = () => {
             <p>{profile.industry}</p>
             <p>{profile.company}</p>
             <p>{profile.position}</p>
-            {/* TODO: edit-profile doesn't work bc currently links to create-profile */}
             <button onClick={() => Navigate('/edit-profile')}>Edit Profile</button>
         </div>
     );

@@ -13,6 +13,7 @@ const App = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [profileInitialized, setProfileInitialized] = useState(false);
+    const [swipeCardInitialized, setSwipeCardInitialized] = useState(false);
 
     useEffect(() => {
         const fetchUserAndProfile = async () => {
@@ -31,6 +32,14 @@ const App = () => {
 
                 if (profileResult.success && profileResult.data) {
                     setProfileInitialized(true);
+                }
+            }
+
+            if (user && user.profileResult) {
+                const swipeCardResult = await getFromSupabase(user.id, "swipe_cards");
+
+                if (swipeCardResult.success && swipeCardResult.data) {
+                    setSwipeCardInitialized(true);
                 }
             }
 
@@ -71,6 +80,30 @@ const App = () => {
                     element={
                         user && user.email_confirmed_at ? (
                             <ProfileForm />
+                        ) : (
+                            <Navigate to="/login" />
+                        )
+                    }
+                />
+                <Route
+                    path="/swipe-card"
+                    element={
+                        user && user.email_confirmed_at ? (
+                            swipeCardInitialized ? (
+                                <SwipeCard />
+                            ) : (
+                                <Navigate to="/edit-swipe-card" />
+                            )
+                        ) : (
+                            <Navigate to="/login" />
+                        )
+                    }
+                />
+                <Route
+                    path="/edit-swipe-card"
+                    element={
+                        user && user.email_confirmed_at ? (
+                            <SwipeCardForm />
                         ) : (
                             <Navigate to="/login" />
                         )

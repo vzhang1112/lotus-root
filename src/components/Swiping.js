@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import TinderCard from 'react-tinder-card';
 import { supabase } from '../utils/supabase.ts'
 
-function SwipeCards ({ profiles }) {
+function Swiping ({ profiles }) {
   // profiles are passed in from the jsx file that this is implemented in
   /* TODO: 
   based on who's logged in, we know who the swiper is 
@@ -51,4 +51,4 @@ function SwipeCards ({ profiles }) {
       );
 };
 
-export default SwipeCards;
+export default Swiping;
