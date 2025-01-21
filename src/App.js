@@ -7,7 +7,7 @@ import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Profile from './pages/Profile';
 import ProfileForm from './components/ProfileForm';
-import SwipeCard from './pages/SwipeCard';
+import MySwipeCards from './pages/MySwipeCards.js'
 import SwipeCardForm from './components/SwipeCardForm.js';
 import NavBar from './components/NavBar';
 import { getFromSupabase } from './utils/supabaseUtils.js';
@@ -90,11 +90,11 @@ const App = () => {
                     }
                 />
                 <Route
-                    path="/swipe-card"
+                    path="/my-swipe-cards"
                     element={
                         user && user.email_confirmed_at ? (
                             swipeCardInitialized ? (
-                                <SwipeCard />
+                                <MySwipeCards />
                             ) : (
                                 <Navigate to="/edit-swipe-card" />
                             )

@@ -8,6 +8,7 @@ import { PRESET_QUESTIONS, LONG_LIMIT, SHORT_LIMIT } from '../utils/constants.ts
 
 const SwipeCardForm = () => {
     const [availability, setAvailability] = useState('');
+    const [role] = useState('');
     const [personalBlurb, setPersonalBlurb] = useState('');
     const [questions, setQuestions] = useState([
         { question: '', answer: '' },
@@ -36,6 +37,9 @@ const SwipeCardForm = () => {
                 return;
             }
 
+            const additionalCriteria = [
+                { column: 'role', operator: 'eq', value: 'mentor' }
+            ]
             const swipeCardResult = await getFromSupabase(user.id, "swipe_cards");
 
             if (swipeCardResult.success && swipeCardResult.data) {
@@ -123,6 +127,7 @@ const SwipeCardForm = () => {
 
         const swipeCardData = {
             user_id: user.id,
+            role: role,
             personal_blurb: personalBlurb,
             question1: questions[0]?.question || '',
             answer1: questions[0]?.answer || '',
