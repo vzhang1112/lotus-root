@@ -51,6 +51,24 @@ const MySwipeCards = () => {
         fetchSwipeCards();
     }, []);
 
+    const handleCreateMentorCard = () => {
+        Navigate('/create-swipe-card', {
+            state: {
+                role: "mentor",
+                availability: "available",
+            },
+        });
+    };
+
+    const handleCreateSeekerCard = () => {
+        Navigate('/create-swipe-card', {
+            state: {
+                role: "seeker",
+                availability: "available",
+            },
+        });
+    };
+
     if (error) {
         return <p style={{ color: 'red' }}>{error}</p>;
     }
@@ -59,10 +77,11 @@ const MySwipeCards = () => {
         return (
             <div>
                 <p>Create your own swipe card!</p>
+                <button onClick={handleCreateMentorCard}>Become a mentor</button>
+                <button onClick={handleCreateSeekerCard}>Become a seeker</button>
                 <button></button>
             </div>
-        )
-        return <p>Loading...</p>;
+        );
     }
 
     return (
