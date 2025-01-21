@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabase.ts';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useBackNavigation } from '../utils/navigationUtils.js';
+import { Navigate } from 'react-router-dom';
 import SwipeCard from '../components/SwipeCard.js';
-import { getFromSupabase } from '../utils/supabaseUtils.js';
 
 const MySwipeCards = () => {
     const [swipeCards, setSwipeCards] = useState([]);

@@ -1,15 +1,13 @@
 import { supabase } from "./supabase.ts"
 
-export const getFromSupabase = async(userId, tableName, additionalCriteria = [])  => {
+export const getFromSupabase = async(userId, tableName)  => {
     try { 
         const { data, error } = await supabase
             .from(tableName)
             .select('*')
             .eq('id', userId);
-        
-        additionalCriteria.forEach(({ column, operator, value }) => {
-            query = query[operator](column, value);
-        });
+
+        // const { data, error } = await query;
 
         if (error) {
             console.error(`Error fetching ${tableName}:`, error);

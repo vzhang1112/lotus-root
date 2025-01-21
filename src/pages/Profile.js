@@ -23,7 +23,7 @@ const Profile = () => {
                 return;
             }
 
-            const profileResult = await getFromSupabase(user.id, "profile");
+            const profileResult = await getFromSupabase(user.id, "profiles");
 
             if (!profileResult.success) {
                 setError('Error fetching profile: ' + profileResult.error.message);

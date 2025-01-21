@@ -2,44 +2,44 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabase.ts';
 import { Navigate } from 'react-router-dom';
 import { useBackNavigation } from '../utils/navigationUtils.js';
-// import { getFromSupabase } from '../utils/supabaseUtils.js';
+import { getFromSupabase } from '../utils/supabaseUtils.js';
 
 const SwipeCard = () => {
-    // const [swipe_card, setSwipeCard] = useState(null);
-    // const [error, setError] = useState('');
+    const [swipe_card, setSwipeCard] = useState(null);
+    const [error, setError] = useState('');
     const handleBack = useBackNavigation();
 
-    // useEffect(() => {
-    //     const fetchSwipeCard = async () => {
-    //         const { data: { user }, error: userError } = await supabase.auth.getUser();
+    useEffect(() => {
+        const fetchSwipeCard = async () => {
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-    //         if (userError) {
-    //             setError('Error fetching user: ' + userError.message);
-    //             return;
-    //         }
+            if (userError) {
+                setError('Error fetching user: ' + userError.message);
+                return;
+            }
             
-    //         if (!user) {
-    //             setError('User not authenticated');
-    //             return;
-    //         }
+            if (!user) {
+                setError('User not authenticated');
+                return;
+            }
 
-    //         const swipeCardResult = await getFromSupabase(user.id, "swipe_cards");
+            const swipeCardResult = await getFromSupabase(user.id, "swipe_cards");
 
-    //         if (!swipeCardResult.success) {
-    //             setError('Error fetching swipe card: ' + swipeCardResult.error.message);
-    //         } else {
-    //             setSwipeCard(swipeCardResult.data);
-    //         }
-    //     };
+            if (!swipeCardResult.success) {
+                setError('Error fetching swipe card: ' + swipeCardResult.error.message);
+            } else {
+                setSwipeCard(swipeCardResult.data);
+            }
+        };
 
-    //     fetchSwipeCard();
-    // }, []);
-    // if (error) {
-    //     return <p style={{ color: 'red' }}>{error}</p>;
-    // }
-    // if (!swipe_card) {
-    //     return <p>Loading...</p>;
-    // }
+        fetchSwipeCard();
+    }, []);
+    if (error) {
+        return <p style={{ color: 'red' }}>{error}</p>;
+    }
+    if (!swipe_card) {
+        return <p>Loading...</p>;
+    }
     
     return (
         <div>

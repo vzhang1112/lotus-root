@@ -37,9 +37,6 @@ const SwipeCardForm = () => {
                 return;
             }
 
-            const additionalCriteria = [
-                { column: 'role', operator: 'eq', value: 'mentor' }
-            ]
             const swipeCardResult = await getFromSupabase(user.id, "swipe_cards");
 
             if (swipeCardResult.success && swipeCardResult.data) {
