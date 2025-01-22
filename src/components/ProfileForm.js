@@ -1,35 +1,11 @@
-/**
- * @fileoverview This file contains the ProfileForm component, which is a React functional component
- * that allows users to create a profile by filling out a form with their display name, hr focus, graduation year,
- * industry, company, and position. The component uses Supabase for authentication and profile creation.
- * It manages form state using React's useState hook and handles form submission with an asynchronous function.
- * If the profile creation is successful, a success message is displayed; otherwise, an error message is shown.
- */
-
-
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext.js';
+import { getProfile, createProfile, updateProfile } from '../utils/profileUtils.js';
 import { supabase } from '../utils/supabase.ts';
-import { getFromSupabase } from '../utils/supabaseUtils.js';
-import { createProfile, updateProfile } from '../utils/profileUtils.js';
-import { useBackNavigation } from '../utils/navigationUtils.js';
-import { HR_FIELDS } from '../utils/constants.ts';
 
-
-/**
- * ProfileForm component allows users to create a profile by filling out a form.
- * The form includes fields for display name, hr focus, graduation year, industry, company, and position.
- * Upon submission, it handles profile creation by calling the `ProfileForm` function with the user's data.
- * 
- * @component
- * @example
- * return (
- *   <ProfileForm />
- * )
- * 
- * @returns {JSX.Element} A form for creating a user profile.
- */
 const ProfileForm = () => {
+    const { user } = useContext(AuthContext);
     const [displayName, setDisplayName] = useState('');
     const [hrFocus, setHrFocus] = useState('');
     const [gradYear, setGradYear] = useState('');
@@ -38,53 +14,58 @@ const ProfileForm = () => {
     const [position, setPosition] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
-    const [isUpdating, setisUpdating] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
-    const handleBack = useBackNavigation();
 
     useEffect(() => {
         const fetchProfile = async () => {
-            const { data: { user }, error: userError } = await supabase.auth.getUser();
-
-            if (userError) {
-                setError('Error fetching user: ' + userError.message);
-                return;
-            }
-
             if (!user) {
-                setError('User not authenticated');
+                setError("User not authenticated");
+                setLoading(false);
                 return;
             }
 
-            const profileResult = await getFromSupabase(user.id, "profile");
+            try {
+                console.log("Fetching profile for user:", user.id);
+                const testResult = await supabase.from('profiles').select('*');
+                console.log('Test result:', testResult);
+                const profileResult = await getProfile(user.id);
+                console.log("Profile result:", profileResult);
 
-            if (profileResult.success && profileResult.data) {
-                const profile = profileResult.data;
-                setDisplayName(profile.display_name);
-                setHrFocus(profile.hrFocus);
-                setGradYear(profile.grad_year);
-                setIndustry(profile.industry);
-                setCompany(profile.company);
-                setPosition(profile.position);
-                setisUpdating(true);
-        }
-    };
+                if (profileResult.success && profileResult.data) {
+                    const profile = profileResult.data;
+                    setDisplayName(profile.display_name);
+                    setHrFocus(profile.hr_focus);
+                    setGradYear(profile.grad_year);
+                    setIndustry(profile.industry);
+                    setCompany(profile.company);
+                    setPosition(profile.position);
+                    setIsUpdating(true);
+                }
+            } catch (error) {
+                setError("Error fetching profile: " + error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    fetchProfile();
-}, []);
+        fetchProfile();
+    }, [user]);
+
+    if (loading) {
+        return <p>Loading profile...</p>
+    }
+
+    if (!user) {
+        return <p>User not authenticated</p>
+    }
 
     const handleProfileCreation = async (e) => {
         e.preventDefault();
         setMessage('');
         setError('');
-
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
-
-        if (userError) {
-            setError('Error fetching user: ' + userError.message);
-            return;
-        }
 
         if (!user) {
             setError('User not authenticated');
@@ -118,6 +99,10 @@ const ProfileForm = () => {
         }
     };
 
+    if (!user) {
+        return <p>Loading user...</p>;
+    }
+
     return (
         <form onSubmit={handleProfileCreation}>
             <input
@@ -127,14 +112,13 @@ const ProfileForm = () => {
                 onChange={(e) => setDisplayName(e.target.value)}
                 required
             />
-            <select 
+            <input
+                type="text"
+                placeholder="HR Focus"
                 value={hrFocus}
-                >
-                    <option value="">Choose your HR focus</option>
-                    {HR_FIELDS.map((HR_FIELDS, i) => (
-                        <option key={i} value={HR_FIELDS}>{HR_FIELDS}</option>
-                    ))}
-                </select>
+                onChange={(e) => setHrFocus(e.target.value)}
+                required
+            />
             <input
                 type="text"
                 placeholder="Graduation Year"
@@ -164,7 +148,6 @@ const ProfileForm = () => {
                 required
             />
             <button type="submit">{isUpdating ? 'Update Profile' : 'Create Profile'}</button>
-            <button type="button" onClick={handleBack}>Cancel without saving</button>
             {message && <p>{message}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>

@@ -1,34 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../utils/supabase.ts';
-import { getCurrentUser } from '../utils/supabase.ts';
+import { AuthContext } from '../context/AuthContext.js';
 
 function Home() {
-    const [user, setUser] = useState(null);
+    const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            const currentUser = await getCurrentUser();
-            if (!currentUser) {
-                navigate('/login');
-            } else {
-                setUser(currentUser);
-            }
-        };
-        fetchUser();
-    }, [navigate]);
-
-    return user ? (
+    return (
         <div>
-            <h1>Welcome, {user.email}!</h1>
-            <button onClick={() => supabase.auth.signOut().then(() => navigate('/login'))}>
-                Logout
-            </button>
-            <button onClick={() => navigate('/profile')}>View profile</button>
+            {user ? (
+                <div>
+                    <h1>Welcome back, {user.email}!</h1>
+                    <button onClick={logout}>Log out</button>
+                </div>
+            ) : (
+                <div>
+                    <h1>Welcome to Lotus Root!</h1>
+                    <button onClick={() => navigate('/login')}>Log in</button>
+                    <button onClick={() => navigate('/signup')}>Sign up</button>
+                </div>
+            )}
         </div>
-    ) : (
-        <p>Loading...</p>
     );
 }
 

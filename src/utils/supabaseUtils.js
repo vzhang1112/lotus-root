@@ -1,22 +1,26 @@
 import { supabase } from "./supabase.ts"
 
-export const getFromSupabase = async(userId, tableName)  => {
-    try { 
+export const getFromSupabase = async (userId, tableName) => {
+    try {
         const { data, error } = await supabase
             .from(tableName)
             .select('*')
-            .eq('id', userId);
-
-        // const { data, error } = await query;
+            .eq('user_id', userId);
 
         if (error) {
-            console.error(`Error fetching ${tableName}:`, error);
             return { success: false, error };
-        } else {
-            return { success: true, data };
         }
+
+        if (data.length === 0) {
+            return { success: false, error: { message: 'No rows returned' } };
+        }
+
+        if (data.length > 1) {
+            return { success: false, error: { message: 'Multiple rows returned' } };
+        }
+
+        return { success: true, data: data[0] };
     } catch (error) {
-        console.error(`Unexpected error fetching ${tableName}:`, error);
         return { success: false, error };
     }
 };

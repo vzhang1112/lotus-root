@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import { supabase } from '../utils/supabase.ts'; // Adjust the import path as needed
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+// import { supabase } from '../utils/supabase.ts';
+import { AuthContext } from '../context/AuthContext.js';
 
-const Auth = () => {
+const Auth = ({ initialIsLogin = true }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isLogin, setIsLogin] = useState(''); // toggles between login & signup
+    const [isLogin, setIsLogin] = useState(initialIsLogin); // toggles between login & signup
     const [message, setMessage] = useState('');
     const [authError, setAuthError] = useState('');
+    const { login, signup }  = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const handleAuth = async (e) => {
         e.preventDefault();
@@ -15,17 +20,15 @@ const Auth = () => {
         setAuthError('');
 
         try {
-            let result;
+            let error;
             if (isLogin) {
                 // login user
-                result = await supabase.auth.signInWithPassword({ email, password });
-                setAuthError('');
-
+                error = await login(email, password);
                 // if credentials are wrong
-                if (result.error) {
-                    if (result.error.message.includes('Invalid login credentials')) {
+                if (error) {
+                    if (error.message.includes('Invalid login credentials')) {
                         setAuthError('Incorrect email or password. Please try again.');
-                    } else if (result.error.message.includes('User not confirmed')) {
+                    } else if (error.message.includes('User not confirmed')) {
                         setAuthError('Your email is not verified, please check inbox');
                     } else {
                         setAuthError('An unexpected error occurred. Please try again later');
@@ -35,28 +38,16 @@ const Auth = () => {
                 }
                 // within the isLogin if statement, if login is successful
                 setMessage('Logged in successfully');
+                navigate('/landing-page'); // navigate to dashboard or desired page
             } else {
                 // handle signup
-                result = await supabase.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        emailRedirectTo: 'http://localhost:3000/welcome', // Adjust the URL as needed
-                    },
-                });
-
-                if (!result.error) {
-                    setMessage('Signed up successfully. Please check your email to verify your account.');
-                } else {
-                    setAuthError(result.error.message);
+                error = await signup(email, password);
+                if (error) {
+                    setAuthError(error.message);
                     return;
                 }
-            }
-
-            const { error } = result;
-            // if there is an error during login process
-            if (error) {
-                setMessage(error.message);
+                setMessage("Signed up successfully. Please check your email.");
+                navigate('/landing-page');
             }
         } catch (error) {
             setAuthError('An unexpected error occurred. Please try again later.');

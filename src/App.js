@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { supabase } from './utils/supabase.ts';
 import Home from './pages/Home';
+import { AuthProvider } from './context/AuthContext.js';
 import Auth from './components/Auth';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
@@ -10,13 +11,13 @@ import ProfileForm from './components/ProfileForm';
 import MySwipeCards from './pages/MySwipeCards.js'
 import SwipeCardForm from './components/SwipeCardForm.js';
 import NavBar from './components/NavBar';
+import Dashboard from './pages/LandingPage.js';
 import { getFromSupabase } from './utils/supabaseUtils.js';
 
 const App = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [profileInitialized, setProfileInitialized] = useState(false);
-    // const [swipeCardInitialized, setSwipeCardInitialized] = useState(false);
 
     useEffect(() => {
         const fetchUserAndProfile = async () => {
@@ -38,14 +39,6 @@ const App = () => {
                 }
             }
 
-            // if (user && user.profileResult) {
-            //     const swipeCardResult = await getFromSupabase(user.id, "swipe_cards");
-
-            //     if (swipeCardResult.success && swipeCardResult.data) {
-            //         setSwipeCardInitialized(true);
-            //     }
-            // }
-
             setLoading(false);
         };
 
@@ -55,62 +48,74 @@ const App = () => {
     if (loading) return <p>Loading...</p>;
 
     return (
-        <Router>
-            <NavBar />
-            <Routes>
-                {/* public routes */}
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={!user ? <Auth /> : <Navigate to="/profile" />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
+        <AuthProvider>
+            <Router>
+                <NavBar />
+                <Routes>
+                    {/* public routes */}
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Auth initialIsLogin={true} />} />
+                    <Route path="/signup" element={<Auth initialIsLogin={false} />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
 
-                {/* protected routes */}
-                <Route
-                    path="/profile"
-                    element={
-                        user && user.email_confirmed_at ? (
-                            profileInitialized ? (
-                                <Profile />
+                    {/* protected routes */}
+                    <Route
+                        path="/profile"
+                        element={
+                            user && user.email_confirmed_at ? (
+                                profileInitialized ? (
+                                    <Profile />
+                                ) : (
+                                    <Navigate to="/edit-profile" />
+                                )
                             ) : (
-                                <Navigate to="/edit-profile" />
+                                <Navigate to="/login" />
                             )
+                        }
+                    />
+                    <Route
+                        path="/edit-profile"
+                        element={
+                            user && user.email_confirmed_at ? (
+                                <ProfileForm />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+
+                    {/* swipecard related routes */}
+                    <Route
+                        path="/my-swipe-cards"
+                        element={
+                            user && user.email_confirmed_at ? (
+                                <MySwipeCards />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/edit-swipe-card"
+                        element={
+                            user && user.email_confirmed_at ? (
+                                <SwipeCardForm />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+                    <Route 
+                        path="/dashboard" 
+                        element={user && user.email_confirmed_at ? (
+                            <Dashboard />
                         ) : (
-                            <Navigate to="/login" />
-                        )
-                    }
-                />
-                <Route
-                    path="/edit-profile"
-                    element={
-                        user && user.email_confirmed_at ? (
-                            <ProfileForm />
-                        ) : (
-                            <Navigate to="/login" />
-                        )
-                    }
-                />
-                <Route
-                    path="/my-swipe-cards"
-                    element={
-                        user && user.email_confirmed_at ? (
-                            <MySwipeCards />
-                        ) : (
-                            <Navigate to="/login" />
-                        )
-                    }
-                />
-                <Route
-                    path="/edit-swipe-card"
-                    element={
-                        user && user.email_confirmed_at ? (
-                            <SwipeCardForm />
-                        ) : (
-                            <Navigate to="/login" />
-                        )
-                    }
-                />
-            </Routes>
-        </Router>
+                            <Navigate to="/" />
+                        )} />
+                </Routes>
+            </Router>
+        </AuthProvider>
     );
 };
 
