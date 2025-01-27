@@ -7,6 +7,16 @@ export const getFromSupabase = async (userId, tableName) => {
             .select('*')
             .eq('user_id', userId);
 
+
+        const { testData, testError } = await supabase
+            .from(tableName)
+            .select('*')
+            .eq('user_id', userId);
+        
+        console.log("inside supabaseutils tablename: ", tableName)
+        console.log("inside supabaseutils user_id: ", testData)
+        console.log("inside supabaseutils user_id problem: ", testError)
+
         if (error) {
             return { success: false, error };
         }

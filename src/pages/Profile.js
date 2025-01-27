@@ -17,7 +17,7 @@ const Profile = () => {
             }
 
             try {
-                console.log('Fetching profile for user:', user);
+                console.log('Fetching profile for user:', user.id);
                 const profileResult = await getFromSupabase(user.id, "profiles");
 
                 if (!profileResult.success) {

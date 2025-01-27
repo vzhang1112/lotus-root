@@ -11,7 +11,7 @@ import ProfileForm from './components/ProfileForm';
 import MySwipeCards from './pages/MySwipeCards.js'
 import SwipeCardForm from './components/SwipeCardForm.js';
 import NavBar from './components/NavBar';
-import Dashboard from './pages/LandingPage.js';
+import LandingPage from './pages/LandingPage.js';
 import { getFromSupabase } from './utils/supabaseUtils.js';
 
 const App = () => {
@@ -64,11 +64,7 @@ const App = () => {
                         path="/profile"
                         element={
                             user && user.email_confirmed_at ? (
-                                profileInitialized ? (
-                                    <Profile />
-                                ) : (
-                                    <Navigate to="/edit-profile" />
-                                )
+                                <Profile />
                             ) : (
                                 <Navigate to="/login" />
                             )
@@ -83,6 +79,16 @@ const App = () => {
                                 <Navigate to="/login" />
                             )
                         }
+                    />
+                    <Route 
+                        path="/landing-page" 
+                        element={
+                            user && user.email_confirmed_at ? (
+                                <LandingPage />
+                            ) : (
+                                <Navigate to="/" />
+                            )
+                        } 
                     />
 
                     {/* swipecard related routes */}
@@ -106,13 +112,6 @@ const App = () => {
                             )
                         }
                     />
-                    <Route 
-                        path="/dashboard" 
-                        element={user && user.email_confirmed_at ? (
-                            <Dashboard />
-                        ) : (
-                            <Navigate to="/" />
-                        )} />
                 </Routes>
             </Router>
         </AuthProvider>

@@ -27,13 +27,13 @@ const NavBar = () => {
                     <>
                         <p>user in navbar is {user.email}</p>
                         <li className="navbar-item">
-                            <Link to="/dashboard" className="navbar-link">Dashboard</Link>
+                            <Link to="/landing-page" className="navbar-link">Landing Page</Link>
                         </li>
                         <li className="navbar-item">
                             <Link to="/my-swipe-cards" className="navbar-link">My Swipe Cards</Link>
                         </li>
                         <li className="navbar-item">
-                            <button onClick={toggleDropdown} className="navbar-link">Profile</button>
+                            <button onClick={toggleDropdown} className="navbar-link">Account</button>
                             {dropdownVisible && (
                                 <div className='dropdown-menu'>
                                     <Link to="/profile" className="dropdown-item">Profile</Link>

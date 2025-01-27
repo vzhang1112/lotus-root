@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 
-function Dashboard() {
+function LandingPage() {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -26,4 +26,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export default LandingPage;
