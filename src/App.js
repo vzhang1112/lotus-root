@@ -13,6 +13,8 @@ import SwipeCardForm from './components/SwipeCardForm.js';
 import NavBar from './components/NavBar';
 import LandingPage from './pages/LandingPage.js';
 import { getFromSupabase } from './utils/supabaseUtils.js';
+import './input.css';
+import './output.css';
 
 const App = () => {
     const [user, setUser] = useState(null);
