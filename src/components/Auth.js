@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { supabase } from '../utils/supabase.ts';
 import { AuthContext } from '../context/AuthContext.js';
+import '../styles/Auth.css'
 
 const Auth = ({ initialIsLogin = true }) => {
     const [email, setEmail] = useState('');

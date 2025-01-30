@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabase.ts';
 import { useNavigate } from 'react-router-dom';
 import SwipeCard from '../components/SwipeCard.js';
+import '../styles/App.css';
 
 const MySwipeCards = () => {
     const [swipeCards, setSwipeCards] = useState([]);

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 import { getFromSupabase } from '../utils/supabaseUtils.js';
+import '../styles/App.css';
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
@@ -47,13 +48,18 @@ const Profile = () => {
     }
 
     return (
-        <div>
+        <div className="example-class">
             <button type="button" onClick={() => navigate(-1)}>Back</button>
             <h1>{profile.display_name}</h1>
+            <p class="subheading">HR Focus</p>
             <p>{profile.hr_focus}</p>
+            <p class="subheading">Graduation Year</p>
             <p>{profile.grad_year}</p>
+            <p class="subheading">Industry</p>
             <p>{profile.industry}</p>
+            <p class="subheading">Company</p>
             <p>{profile.company}</p>
+            <p class="subheading">Position</p>
             <p>{profile.position}</p>
             <button onClick={() => navigate('/edit-profile')}>Edit Profile</button>
         </div>

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
+import '../styles/App.css';
 
 function LandingPage() {
     const { user, logout } = useContext(AuthContext);

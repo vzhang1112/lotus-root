@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
+import '../styles/App.css'
 
 function Home() {
     const { user, logout } = useContext(AuthContext);
@@ -15,9 +16,9 @@ function Home() {
                 </div>
             ) : (
                 <div>
-                    <h1>Welcome to Lotus Root!</h1>
-                    <button onClick={() => navigate('/login')}>Log in</button>
-                    <button onClick={() => navigate('/signup')}>Sign up</button>
+                    <h1 className="text-x1">Welcome to Lotus Root!</h1>
+                    <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" onClick={() => navigate('/login')}>Log in</button>
+                    <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" onClick={() => navigate('/signup')}>Sign up</button>
                 </div>
             )}
         </div>
