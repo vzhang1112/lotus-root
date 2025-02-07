@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabase.ts';
 import { Navigate } from 'react-router-dom';
-import { useBackNavigation } from '../utils/navigationUtils.js';
 import { getFromSupabase } from '../utils/supabaseUtils.js';
 
 const SwipeCard = () => {
+    const [user, setUser] = useState(null);
     const [swipe_card, setSwipeCard] = useState(null);
     const [error, setError] = useState('');
-    const handleBack = useBackNavigation();
 
     useEffect(() => {
         const fetchSwipeCard = async () => {
@@ -22,6 +21,8 @@ const SwipeCard = () => {
                 setError('User not authenticated');
                 return;
             }
+
+            setUser(user);
 
             const swipeCardResult = await getFromSupabase(user.id, "swipe_cards");
 
@@ -43,7 +44,6 @@ const SwipeCard = () => {
     
     return (
         <div>
-            <button type="button" onClick={handleBack}>Back</button>
             <h1>{swipe_card.role}</h1>
             <p>{swipe_card.availability}</p>
             <p>{swipe_card.question1 ? swipe_card.question1 : ''}</p>
@@ -53,7 +53,9 @@ const SwipeCard = () => {
             <p>{swipe_card.question3 ? swipe_card.question3 : ''}</p>
             <p>{swipe_card.answer3 ? swipe_card.answer3 : ''}</p>
             <p>{swipe_card.personal_blurb ? swipe_card.personal_blurb : ''}</p>
-            <button onClick={() => Navigate('/edit-swipe-card')}>Edit Swipe Card</button>
+            {user && user.id === swipe_card.user_id && (
+                <button onClick={() => Navigate('/edit-swipe-card')}>Edit Swipe Card</button>
+            )}
         </div>
     );
 };

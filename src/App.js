@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { supabase } from './utils/supabase.ts';
 import Home from './pages/Home';
 import { AuthProvider } from './context/AuthContext.js';
-import Auth from './components/Auth';
+import SwipingPage from './pages/SwipingPage.js';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Profile from './pages/Profile';
@@ -56,8 +58,8 @@ const App = () => {
                 <Routes>
                     {/* public routes */}
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Auth initialIsLogin={true} />} />
-                    <Route path="/signup" element={<Auth initialIsLogin={false} />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
 
@@ -109,6 +111,16 @@ const App = () => {
                         element={
                             user && user.email_confirmed_at ? (
                                 <SwipeCardForm />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/swipe-on-people"
+                        element={
+                            user && user.email_confirmed_at ? (
+                                <SwipingPage />
                             ) : (
                                 <Navigate to="/login" />
                             )

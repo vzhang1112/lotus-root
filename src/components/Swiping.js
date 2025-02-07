@@ -1,54 +1,78 @@
-import React, {useState} from 'react';
+import React from 'react';
 import TinderCard from 'react-tinder-card';
-import { supabase } from '../utils/supabase.ts'
 
-function Swiping ({ profiles }) {
-  // profiles are passed in from the jsx file that this is implemented in
-  /* TODO: 
-  based on who's logged in, we know who the swiper is 
-  1. project account name from supabase onto displayName used in TinderCard
-  2. use that supabase acct info to apply to swipes db
-  */ 
-    const [lastDirection, setLastDirection] = useState('');
 
-    const retrieveName = (profiles) => {
-      
-    }
+const Swiping = ({profiles}) => {
 
-    const swiped = async (direction, displayName) => {
-        console.log('${displayName} swiped ${direction}');
-        setLastDirection(direction);
+  // const swiped = (direction, nameToDelete) => {
+  //   console.log("removing: ${nameToDelete} in direction: ${direction}");
+  // };
 
-      const { data, error } = await supabase
-      .from('swipes')
-      .insert ([
-        { display_name: displayName, 
-          direction: direction },
-      ]);
-      if (error) console.error('Error saving swipe: ', error);
-    };
+  // const outOfFrame = (name) => {
+  //   console.log(name + " left the screen");
+  // }
 
-    const outOfFrame = (displayName) => {
-        console.log('${displayName} has left the screen');
-    };
+  const onSwipe = (direction) => {
+    console.log("You swiped: " + direction)
+  }
 
-    return (
-        <div className="card-container">
-          {profiles.map((profile) => (
-            <TinderCard
-              key={profile.id}
-              onSwipe={(dir) => swiped(dir, profile.name)}
-              onCardLeftScreen={() => outOfFrame(profile.name)}
-              preventSwipe={['up', 'down']}
-            >
-              <div className="card" style={{ backgroundImage: `url(${profile.photoUrl})` }}>
-                <h3>{profile.name}</h3>
-              </div>
-            </TinderCard>
-          ))}
-          {lastDirection && <p>You swiped {lastDirection}</p>}
-        </div>
-      );
+  const onCardLeftScreen = (myIdentifier) => {
+    console.log(myIdentifier + " left the screen")
+  }
+
+  return (
+    <div>
+      {profiles.map((profile) => (
+        <TinderCard 
+        onSwipe={onSwipe}
+        onCardLeftScreen={() => onCardLeftScreen(profile.display_name)} 
+        preventSwipe={['right', 'left']}>
+          <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '10px' }}>
+            <h3>{profile.display_name}</h3>
+            <p>Industry: {profile.industry}</p>
+            <p>HR Focus: {profile.hr_focus}</p>
+            <p>Company: {profile.company}</p>
+            <p>Position: {profile.position}</p>
+          </div>
+      </TinderCard>
+      ))}
+    </div>
+  )
 };
 
 export default Swiping;
+
+
+
+
+// const Swiping = ({ profiles }) => {
+//     const swiped = (direction, nameToDelete) => {
+//         console.log(`removing: ${nameToDelete} in direction: ${direction}`);
+//     };
+
+//     const outOfFrame = (name) => {
+//         console.log(name + ' left the screen!');
+//     };
+
+//     return (
+//         <div>
+//             {profiles.map((profile) => (
+//                 <TinderCard
+//                     key={profile.id}
+//                     onSwipe={(dir) => swiped(dir, profile.display_name)}
+//                     onCardLeftScreen={() => outOfFrame(profile.display_name)}
+//                 >
+//                     <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '10px' }}>
+//                         <h3>{profile.display_name}</h3>
+//                         <p>Industry: {profile.industry}</p>
+//                         <p>HR Focus: {profile.hr_focus}</p>
+//                         <p>Company: {profile.company}</p>
+//                         <p>Position: {profile.position}</p>
+//                     </div>
+//                 </TinderCard>
+//             ))}
+//         </div>
+//     );
+// };
+
+// export default Swiping;
