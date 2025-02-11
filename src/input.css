@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
 @import "tailwindcss";
 
 @theme {
     /* light theme */
-    --color-surface: var(--color-white);
+    --color-light-theme: oklch(0.68 0.0187 103.3);
+    --color-surface: var(--color-neutral-10);
     --color-surface-alt: var(--color-neutral-50);
     --color-on-surface: var(--color-neutral-600);
     --color-on-surface-strong: var(--color-neutral-900);
@@ -37,4 +39,28 @@
 
     /* border radius */
     --radius-radius: var(--radius-sm);
+
+    /* font theme */
+    --font-sans: "Parkinsans", sans-serif;
+}
+
+@layer base {
+    h1 {
+        font-size: 5vw;
+        font-weight: bold;
+    }
+    h2 {
+        font-size: 4vw;
+        font-weight: bold;
+    }
+    h3 {
+        font-size: 3vw;
+    }
+    h4 {
+        font-size: 2vw;
+    }
+    /* body {
+        margin-top: 10vw;
+        margin: 5vw;
+    } */
 }
