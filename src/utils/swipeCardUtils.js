@@ -38,7 +38,6 @@ export const createSwipeCard = async (swipeCardData) => {
 };
 
 
-// export const updateSwipeCard = async (user_id, swipeCardData) => {
 export const updateSwipeCard = async (swipeCardData) => {
     const { user_id, role, availability, question1, answer1, question2, answer2,
         question3, answer3, personal_blurb } = swipeCardData;

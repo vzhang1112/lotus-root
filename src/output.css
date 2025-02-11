@@ -551,6 +551,9 @@
   }
 }
 @layer utilities {
+  .visible {
+    visibility: visible;
+  }
   .absolute {
     position: absolute;
   }
@@ -673,9 +676,6 @@
   .border-outline {
     border-color: var(--color-outline);
   }
-  .border-secondary {
-    border-color: var(--color-secondary);
-  }
   .bg-blue-200 {
     background-color: var(--color-blue-200);
   }
@@ -684,9 +684,6 @@
   }
   .bg-blue-600 {
     background-color: var(--color-blue-600);
-  }
-  .bg-secondary {
-    background-color: var(--color-secondary);
   }
   .bg-surface-alt {
     background-color: var(--color-surface-alt);
@@ -700,9 +697,6 @@
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
-  .px-4 {
-    padding-inline: calc(var(--spacing) * 4);
-  }
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
   }
@@ -711,9 +705,6 @@
   }
   .pl-0\.5 {
     padding-left: calc(var(--spacing) * 0.5);
-  }
-  .text-center {
-    text-align: center;
   }
   .text-2xl {
     font-size: var(--text-2xl);
@@ -735,25 +726,11 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
-  .font-medium {
-    --tw-font-weight: var(--font-weight-medium);
-    font-weight: var(--font-weight-medium);
-  }
-  .tracking-wide {
-    --tw-tracking: var(--tracking-wide);
-    letter-spacing: var(--tracking-wide);
-  }
-  .whitespace-nowrap {
-    white-space: nowrap;
-  }
   .text-amber-200 {
     color: var(--color-amber-200);
   }
   .text-black {
     color: var(--color-black);
-  }
-  .text-on-secondary {
-    color: var(--color-on-secondary);
   }
   .text-on-surface {
     color: var(--color-on-surface);
@@ -774,11 +751,6 @@
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-  .transition {
-    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
   .transition-all {
     transition-property: all;
@@ -814,13 +786,6 @@
       }
     }
   }
-  .hover\:opacity-75 {
-    &:hover {
-      @media (hover: hover) {
-        opacity: 75%;
-      }
-    }
-  }
   .focus-visible\:outline-2 {
     &:focus-visible {
       outline-style: var(--tw-outline-style);
@@ -837,21 +802,6 @@
       outline-color: var(--color-primary);
     }
   }
-  .focus-visible\:outline-secondary {
-    &:focus-visible {
-      outline-color: var(--color-secondary);
-    }
-  }
-  .active\:opacity-100 {
-    &:active {
-      opacity: 100%;
-    }
-  }
-  .active\:outline-offset-0 {
-    &:active {
-      outline-offset: 0px;
-    }
-  }
   .disabled\:cursor-not-allowed {
     &:disabled {
       cursor: not-allowed;
@@ -865,6 +815,11 @@
   .sm\:mt-20 {
     @media (width >= 40rem) {
       margin-top: calc(var(--spacing) * 20);
+    }
+  }
+  .sm\:hidden {
+    @media (width >= 40rem) {
+      display: none;
     }
   }
   .md\:mt-24 {
@@ -902,24 +857,9 @@
       border-color: var(--color-outline-dark);
     }
   }
-  .dark\:border-secondary-dark {
-    @media (prefers-color-scheme: dark) {
-      border-color: var(--color-secondary-dark);
-    }
-  }
-  .dark\:bg-secondary-dark {
-    @media (prefers-color-scheme: dark) {
-      background-color: var(--color-secondary-dark);
-    }
-  }
   .dark\:bg-surface-dark-alt\/50 {
     @media (prefers-color-scheme: dark) {
       background-color: color-mix(in oklab, var(--color-surface-dark-alt) 50%, transparent);
-    }
-  }
-  .dark\:text-on-secondary-dark {
-    @media (prefers-color-scheme: dark) {
-      color: var(--color-on-secondary-dark);
     }
   }
   .dark\:text-on-surface-dark {
@@ -931,13 +871,6 @@
     @media (prefers-color-scheme: dark) {
       &:focus-visible {
         outline-color: var(--color-primary-dark);
-      }
-    }
-  }
-  .dark\:focus-visible\:outline-secondary-dark {
-    @media (prefers-color-scheme: dark) {
-      &:focus-visible {
-        outline-color: var(--color-secondary-dark);
       }
     }
   }
@@ -956,6 +889,44 @@
   }
   h4 {
     font-size: 2vw;
+  }
+  button {
+    white-space: nowrap;
+    border-radius: var(--radius-radius);
+    background-color: oklch(.70 0.1 171);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--color-on-secondary);
+    transition: opacity 0.2s;
+    text-align: center;
+  }
+  button:hover {
+    opacity: 0.75;
+  }
+  button:focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+  }
+  button:active {
+    opacity: 1;
+    outline-offset: 0;
+  }
+  button:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+  button.dark {
+    background-color: var(--color-secondary-dark);
+    border: 1px solid var(--color-secondary-dark);
+    color: var(--color-on-secondary-dark);
+  }
+  button.dark:focus-visible {
+    outline: 2px solid var(--color-secondary-dark);
   }
 }
 @keyframes spin {
@@ -1035,10 +1006,6 @@
   initial-value: solid;
 }
 @property --tw-font-weight {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-tracking {
   syntax: "*";
   inherits: false;
 }

@@ -81,11 +81,10 @@ const Auth = ({ initialIsLogin = true }) => {
                     required
                 />
             </div>
-            <button type="submit" class="whitespace-nowrap rounded-radius bg-secondary border border-secondary px-4 py-2 text-sm font-medium tracking-wide text-on-secondary transition hover:opacity-75 text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:bg-secondary-dark dark:border-secondary-dark dark:text-on-secondary-dark dark:focus-visible:outline-secondary-dark">
+            <button type="submit">
                 {isLogin ? 'Login' : 'Sign Up'}
                 </button>
-            <button type="button" onClick={() => setIsLogin(!isLogin)}
-            class="whitespace-nowrap rounded-radius bg-secondary border border-secondary px-4 py-2 text-sm font-medium tracking-wide text-on-secondary transition hover:opacity-75 text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:bg-secondary-dark dark:border-secondary-dark dark:text-on-secondary-dark dark:focus-visible:outline-secondary-dark">
+            <button type="button" onClick={() => setIsLogin(!isLogin)}>
                 {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
             </button>
             {message && <p>{message}</p>}
