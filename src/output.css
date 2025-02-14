@@ -542,9 +542,6 @@
   }
 }
 @layer utilities {
-  .visible {
-    visibility: visible;
-  }
   .absolute {
     position: absolute;
   }
@@ -672,9 +669,6 @@
   .bg-blue-200 {
     background-color: var(--color-blue-200);
   }
-  .bg-primary {
-    background-color: var(--color-primary);
-  }
   .bg-secondary {
     background-color: var(--color-secondary);
   }
@@ -696,10 +690,6 @@
   .pl-0\.5 {
     padding-left: calc(var(--spacing) * 0.5);
   }
-  .text-2xl {
-    font-size: var(--text-2xl);
-    line-height: var(--tw-leading, var(--text-2xl--line-height));
-  }
   .text-3xl {
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
@@ -715,9 +705,6 @@
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
-  }
-  .text-background {
-    color: var(--color-background);
   }
   .underline {
     text-decoration-line: underline;
@@ -750,13 +737,6 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-emerald-600);
-      }
-    }
-  }
-  .hover\:text-text-light {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-text-light);
       }
     }
   }
