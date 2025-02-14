@@ -107,6 +107,7 @@ const ProfileForm = () => {
         <form onSubmit={handleProfileCreation}>
             <input
                 type="text"
+                class="input-default"
                 placeholder="Display Name"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
@@ -114,6 +115,7 @@ const ProfileForm = () => {
             />
             <input
                 type="text"
+                class="input-default"
                 placeholder="HR Focus"
                 value={hrFocus}
                 onChange={(e) => setHrFocus(e.target.value)}
@@ -121,6 +123,7 @@ const ProfileForm = () => {
             />
             <input
                 type="text"
+                class="input-default"
                 placeholder="Graduation Year"
                 value={gradYear}
                 onChange={(e) => setGradYear(e.target.value)}
@@ -128,6 +131,7 @@ const ProfileForm = () => {
             />
             <input
                 type="text"
+                class="input-default"
                 placeholder="Industry"
                 value={industry}
                 onChange={(e) => setIndustry(e.target.value)}
@@ -135,6 +139,7 @@ const ProfileForm = () => {
             />
             <input
                 type="text"
+                class="input-default"
                 placeholder="Company"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
@@ -142,12 +147,13 @@ const ProfileForm = () => {
             />
             <input
                 type="text"
+                class="input-default"
                 placeholder="Position"
                 value={position}
                 onChange={(e) => setPosition(e.target.value)}
                 required
             />
-            <button type="submit">{isUpdating ? 'Update Profile' : 'Create Profile'}</button>
+            <button type="submit" class="button">{isUpdating ? 'Update Profile' : 'Create Profile'}</button>
             {message && <p>{message}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>

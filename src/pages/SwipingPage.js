@@ -22,12 +22,14 @@ function SwipingPage() {
     }, []);
 
     return (
-        <div className="flex min-h-svh items-center justify-center p-6 md:p-10">
-            <div className="w-full max-w-sm">
-                <p>Welcome to the swiping page</p>
-                <Swiping profiles={profiles} />
+        <body class="body-default">
+            <div className="flex min-h-svh items-center justify-center p-6 md:p-10">
+                <div className="w-full max-w-sm">
+                    <p>Welcome to the swiping page</p>
+                    <Swiping profiles={profiles} />
+                </div>
             </div>
-        </div>
+        </body>
     );
 }
 

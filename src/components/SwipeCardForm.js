@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useBackNavigation } from '../utils/navigationUtils';
 import { supabase } from '../utils/supabase.ts';
 import { getFromSupabase } from '../utils/supabaseUtils';
@@ -11,9 +12,9 @@ const SwipeCardForm = () => {
     const [role] = useState('');
     const [personalBlurb, setPersonalBlurb] = useState('');
     const [questions, setQuestions] = useState([
-        { question: '', answer: '' },
-        { question: '', answer: '' },
-        { question: '', answer: '' },
+        { id: '1', question: '', answer: '' },
+        { id: '2', question: '', answer: '' },
+        { id: '3', question: '', answer: '' },
     ]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -44,9 +45,9 @@ const SwipeCardForm = () => {
                 setAvailability(swipeCard.availability);
                 setPersonalBlurb(swipeCard.personal_blurb);
                 setQuestions([
-                    { question: swipeCard.question1, answer: swipeCard.answer1 },
-                    { question: swipeCard.question2, answer: swipeCard.answer2 },
-                    { question: swipeCard.question3, answer: swipeCard.answer3 },
+                    { id: '1', question: swipeCard.question1, answer: swipeCard.answer1 },
+                    { id: '2', question: swipeCard.question2, answer: swipeCard.answer2 },
+                    { id: '3', question: swipeCard.question3, answer: swipeCard.answer3 },
                 ]);
                 setIsUpdating(true);
             }
@@ -69,13 +70,6 @@ const SwipeCardForm = () => {
 
     const handleRemoveQuestion = (index) => {
         const newQuestions = questions.filter((_, i) => i !== index);
-        setQuestions(newQuestions);
-    };
-
-    const handleMoveQuestion = (index, direction) => {
-        const newQuestions = [...questions];
-        const [movedQuestion] = newQuestions.splice(index, 1);
-        newQuestions.splice(index + direction, 0, movedQuestion);
         setQuestions(newQuestions);
     };
 
@@ -136,7 +130,6 @@ const SwipeCardForm = () => {
 
         let swipeCardResult;
         if (isUpdating) {
-            // swipeCardResult = await updateSwipeCard(user.id, swipeCardData);
             swipeCardResult = await updateSwipeCard(swipeCardData);
         } else {
             swipeCardResult = await createSwipeCard(swipeCardData);
@@ -150,44 +143,72 @@ const SwipeCardForm = () => {
         }
     };
 
+    const onDragEnd = (result) => {
+        if (!result.destination) return;
+
+        const newQuestions = Array.from(questions);
+        const [movedQuestion] = newQuestions.splice(result.source.index, 1);
+        newQuestions.splice(result.destination.index, 0, movedQuestion);
+
+        setQuestions(newQuestions);
+    };
+
     return (
         <form onSubmit={handleSubmit}>
             <textarea
                 placeholder="Personal Blurb"
+                class="input-default"
                 value={personalBlurb}
                 onChange={handleBlurbChange}
             />
             <p>{wordCounts.blurb}/{LONG_LIMIT}</p>
-            {questions.map((q, index) => (
-                <div key={index}>
-                    <select
-                        value={q.question}
-                        onChange={(e) => handlePresetQuestionChange(index, e.target.value)}
-                        >
-                            <option value="">Select a question</option>
-                            {PRESET_QUESTIONS.map((PRESET_QUESTIONS, i) => (
-                                <option key={i} value={PRESET_QUESTIONS}>{PRESET_QUESTIONS}</option>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="questions">
+                    {(provided) => (
+                        <div {...provided.droppableProps} ref={provided.innerRef}>
+                            {questions.map((q, index) => (
+                                <Draggable key={q.id} draggableId={q.id} index={index}>
+                                    {(provided) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                        >
+                                            <select
+                                                value={q.question}
+                                                onChange={(e) => handlePresetQuestionChange(index, e.target.value)}
+                                            >
+                                                <option value="">Select a question</option>
+                                                {PRESET_QUESTIONS.map((PRESET_QUESTIONS, i) => (
+                                                    <option key={i} value={PRESET_QUESTIONS}>{PRESET_QUESTIONS}</option>
+                                                ))}
+                                            </select>
+                                            <input
+                                                type="text"
+                                                class="input-default"
+                                                placeholder={'Your answer here'}
+                                                value={q.answer}
+                                                onChange={(e) => handleAnswerChange(index, e.target.value)}
+                                            />
+                                            <p>{wordCounts[`answer${index + 1}`]}/{SHORT_LIMIT}</p>
+                                            <button type="button" onClick={() => handleRemoveQuestion(index)}>Remove</button>
+                                        </div>
+                                    )}
+                                </Draggable>
                             ))}
-                        </select>
-                    <input
-                        type="text"
-                        placeholder={'Your answer here'}
-                        value={q.answer}
-                        onChange={(e) => handleAnswerChange(index, e.target.value)}
-                    />
-                    <p>{wordCounts[`answer${index + 1}`]}/{SHORT_LIMIT}</p>
-                    <button type="button" onClick={() => handleRemoveQuestion(index)}>Remove</button>
-                    {index > 0 && <button type="button" onClick={() => handleMoveQuestion(index, -1)}>Move Up</button>}
-                    {index < questions.length - 1 && <button type="button" onClick={() => handleMoveQuestion(index, 1)}>Move Down</button>}
-                </div>
-            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
             <textarea
                 placeholder="General availability (ex. weekdays after 5pm, tu/wed at lunch)"
                 value={availability}
                 onChange={handleAvailabilityChange}
+                class="input-default"
             />
-            <button type="button" onClick={handleBack}>Cancel without saving</button>
-            <button type="submit">{isUpdating ? 'Update Swipe Card' : 'Create Swipe Card'}</button>
+            <button type="button" class="button" onClick={handleBack}>Cancel without saving</button>
+            <button type="submit" class="button">{isUpdating ? 'Update Swipe Card' : 'Create Swipe Card'}</button>
             {message && <p>{message}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>

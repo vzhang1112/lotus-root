@@ -27,7 +27,7 @@ const Swiping = ({profiles}) => {
         onSwipe={onSwipe}
         onCardLeftScreen={() => onCardLeftScreen(profile.display_name)} 
         preventSwipe={['right', 'left']}>
-          <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '10px' }}>
+          <div class="p-20 rounded-lg border-secondary">
             <h3>{profile.display_name}</h3>
             <p>Industry: {profile.industry}</p>
             <p>HR Focus: {profile.hr_focus}</p>

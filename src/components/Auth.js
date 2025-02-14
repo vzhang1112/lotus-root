@@ -63,7 +63,7 @@ const Auth = ({ initialIsLogin = true }) => {
                 <input
                     id="textInputDefault"
                     type="text"
-                    className="w-full rounded-radius border border-outline bg-surface-alt px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 dark:border-outline-dark dark:bg-surface-dark-alt/50 dark:focus-visible:outline-primary-dark"
+                    className="input-default"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -75,16 +75,16 @@ const Auth = ({ initialIsLogin = true }) => {
                 <input
                     id="textInputDefault"
                     type="password"
-                    className="w-full rounded-radius border border-outline bg-surface-alt px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 dark:border-outline-dark dark:bg-surface-dark-alt/50 dark:focus-visible:outline-primary-dark"
+                    className="input-default"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
             </div>
-            <button type="submit">
+            <button type="submit" class="button">
                 {isLogin ? 'Login' : 'Sign Up'}
                 </button>
-            <button type="button" onClick={() => setIsLogin(!isLogin)}>
+            <button type="button" class="button" onClick={() => setIsLogin(!isLogin)}>
                 {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
             </button>
             {message && <p>{message}</p>}

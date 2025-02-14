@@ -81,22 +81,27 @@ const MySwipeCards = () => {
 
     if (!swipeCards.length) {
         return (
-            <div class="mt-16 sm:mt-20 md:mt-24 lg:mt-32 xl:mt-40 mx-auto max-w-4xl p-6">
-                <p>Create your own swipe card!</p>
-                <button onClick={handleCreateMentorCard}>
-                    Become a mentor</button>
-                <button onClick={handleCreateSeekerCard}>
-                    Become a seeker</button>
-            </div>
+            <body class="body-default">
+                <div>
+                    <p>Create your own swipe card!</p>
+                    <button onClick={handleCreateMentorCard}>
+                        Become a mentor</button>
+                    <button onClick={handleCreateSeekerCard}>
+                        Become a seeker</button>
+                </div>
+            </body>
+            
         );
     }
 
     return (
-        <div class="mt-16 sm:mt-20 md:mt-24 lg:mt-32 xl:mt-40 mx-auto max-w-4xl p-6">
-            {swipeCards.map((swipeCard) => (
-                <SwipeCard key={swipeCard.id} swipeCard={swipeCard} />
-            ))}
-        </div>
+        <body class="body-default">
+            <div>
+                {swipeCards.map((swipeCard) => (
+                    <SwipeCard key={swipeCard.id} swipeCard={swipeCard} />
+                ))}
+            </div>
+        </body>
     );
 };
 

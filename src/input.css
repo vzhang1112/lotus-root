@@ -3,29 +3,20 @@
 
 @theme {
     /* light theme */
-    --color-light-theme: oklch(0.68 0.0187 103.3);
-    --color-surface: var(--color-neutral-10);
-    --color-surface-alt: var(--color-neutral-50);
-    --color-on-surface: var(--color-neutral-600);
-    --color-on-surface-strong: var(--color-neutral-900);
-    --color-primary: var(--color-black);
-    --color-on-primary: var(--color-neutral-100);
-    --color-secondary: var(--color-neutral-800);
-    --color-on-secondary: var(--color-white);
-    --color-outline: var(--color-neutral-300);
-    --color-outline-strong: var(--color-neutral-800);
+    --color-text: oklch(27.19% 0.090 264.55);
+    --color-text-light:oklch(81.03% 0.070 268.46);
+    --color-text-hover: oklch(44.79% 0.1662 264.2);
+    --color-background: oklch(92.39% 0.0336 73.19);
+    --color-primary: oklch(46.03% 0.172 264.09);
+    --color-secondary: oklch(78.35% 0.055 344.26);
+    --color-accent: oklch(76.69% 0.067 23.40);
 
     /* dark theme */
-    --color-surface-dark: var(--color-neutral-950);
-    --color-surface-dark-alt: var(--color-neutral-900);
-    --color-on-surface-dark: var(--color-neutral-300);
-    --color-on-surface-dark-strong: var(--color-white);
-    --color-primary-dark: var(--color-white);
-    --color-on-primary-dark: var(--color-black);
-    --color-secondary-dark: var(--color-neutral-300);
-    --color-on-secondary-dark: var(--color-black);
-    --color-outline-dark: var(--color-neutral-700);
-    --color-outline-dark-strong: var(--color-neutral-300);
+    --color-dark-text: oklch(81.03% 0.070 268.46);
+    --color-dark-background: oklch(10.83% 0.007 285.17);
+    --color-dark-primary: oklch(57.69% 0.167 265.16);
+    --color-dark-secondary: oklch(35.29% 0.066 346.90);
+    --color-dark-accent: oklch(35.53% 0.083 26.22);
 
     /* shared colors */
     --color-info: var(--color-sky-500);
@@ -45,25 +36,42 @@
 }
 
 @layer base {
+    body {
+        background-color: var(--color-background);
+        color: var(--color-text);
+        text-wrap: wrap;
+    }
+    .body-default {
+        margin-top: 4rem; /* mt-16 */
+        margin-left: auto; /* mx-auto */
+        margin-right: auto; /* mx-auto */
+        max-width: 64rem; /* max-w-4xl */
+        padding: 1.5rem; /* p-6 */
+    }
     h1 {
-        font-size: 5vw;
+        font-size: 32px;
         font-weight: bold;
     }
     h2 {
-        font-size: 4vw;
+        font-size: 24px;
         font-weight: bold;
     }
     h3 {
-        font-size: 3vw;
+        font-size: 18px;
     }
     h4 {
-        font-size: 2vw;
+        font-size: 14px;
+    }
+    h5 {
+        font-size: 12px;
+    }
+    p {
+        font-size: 12px;
     }
     button {
         white-space: nowrap;
         border-radius: var(--radius-radius);
-        background-color: oklch(.70 0.1 171);
-        /* border: 1px solid var(--color-secondary); */
+        background-color: var(--color-primary);
         padding-left: 1rem;
         padding-right: 1rem;
         padding-top: 0.5rem;
@@ -71,7 +79,7 @@
         font-size: 0.875rem;
         font-weight: 500;
         letter-spacing: 0.05em;
-        color: var(--color-on-secondary);
+        color: var(--color-background);
         transition: opacity 0.2s;
         text-align: center;
     }
@@ -96,12 +104,78 @@
     }
 
     button.dark {
-        background-color: var(--color-secondary-dark);
-        border: 1px solid var(--color-secondary-dark);
-        color: var(--color-on-secondary-dark);
+        background-color: var(--color-dark-secondary);
+        /* border: 1px solid var(--color-dark-secondary); */
+        color: var(--color-dark-secondary);
     }
 
     button.dark:focus-visible {
-        outline: 2px solid var(--color-secondary-dark);
+        outline: 2px solid var(--color-dark-secondary);
+    }
+
+    .text-light {
+        color: var(--color-text);
+    }
+
+    .text-light-hover {
+        color: var(--color-text-hover);
+    }
+
+    .input-default {
+        width: 100%;
+        border-radius: var(--radius-radius);
+        border: 1px solid var(--color-outline);
+        background-color: var(--color-surface-alt);
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        font-size: 0.875rem;
+        transition: outline 0.2s;
+        cursor: not-allowed;
+        opacity: 0.75;
+    }
+    
+    .input-default:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+    
+    .input-default:disabled {
+        cursor: not-allowed;
+        opacity: 0.75;
+    }
+    
+    .input-default.dark {
+        border: 1px solid var(--color-outline-dark);
+        background-color: rgba(var(--color-surface-dark-alt), 0.5);
+    }
+    
+    .input-default.dark:focus-visible {
+        outline: 2px solid var(--color-primary-dark);
+    }
+}
+
+@media (min-width: 640px) {
+    .body-default {
+        margin-top: 5rem; /* sm:mt-20 */
+    }
+}
+
+@media (min-width: 768px) {
+    .body-default {
+        margin-top: 6rem; /* md:mt-24 */
+    }
+}
+
+@media (min-width: 1024px) {
+    .body-default {
+        margin-top: 8rem; /* lg:mt-32 */
+    }
+}
+
+@media (min-width: 1280px) {
+    .body-default {
+        margin-top: 10rem; /* xl:mt-40 */
     }
 }
