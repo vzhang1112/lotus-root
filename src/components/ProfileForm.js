@@ -104,59 +104,70 @@ const ProfileForm = () => {
     }
 
     return (
-        <form onSubmit={handleProfileCreation}>
-            <input
-                type="text"
-                class="input-default"
-                placeholder="Display Name"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                required
-            />
-            <input
-                type="text"
-                class="input-default"
-                placeholder="HR Focus"
-                value={hrFocus}
-                onChange={(e) => setHrFocus(e.target.value)}
-                required
-            />
-            <input
-                type="text"
-                class="input-default"
-                placeholder="Graduation Year"
-                value={gradYear}
-                onChange={(e) => setGradYear(e.target.value)}
-                required
-            />
-            <input
-                type="text"
-                class="input-default"
-                placeholder="Industry"
-                value={industry}
-                onChange={(e) => setIndustry(e.target.value)}
-                required
-            />
-            <input
-                type="text"
-                class="input-default"
-                placeholder="Company"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-                required
-            />
-            <input
-                type="text"
-                class="input-default"
-                placeholder="Position"
-                value={position}
-                onChange={(e) => setPosition(e.target.value)}
-                required
-            />
-            <button type="submit" class="button">{isUpdating ? 'Update Profile' : 'Create Profile'}</button>
-            {message && <p>{message}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-        </form>
+        <body class='body-default'>
+            <div class="h-screen md:flex">
+            <div
+		        class="relative overflow-hidden md:flex w-1/2 bg-secondary justify-around items-center hidden">
+            </div>
+            <div className="md:flex w-1/2 min-h-svh items-center justify-center">
+                <form onSubmit={handleProfileCreation}
+                    class='flex max-w-xs flex-col gap-1 text-light dark:text-dark-text bg-white shadow-lg p-6 md:p-10'>
+                    <h1>{isUpdating ? 'Update Profile' : 'Create Profile'}</h1>
+                    <input
+                        type="text"
+                        class='input-default'
+                        placeholder="Display Name"
+                        value={displayName}
+                        onChange={(e) => setDisplayName(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="text"
+                        class="input-default"
+                        placeholder="HR Focus"
+                        value={hrFocus}
+                        onChange={(e) => setHrFocus(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="text"
+                        class="input-default"
+                        placeholder="Graduation Year"
+                        value={gradYear}
+                        onChange={(e) => setGradYear(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="text"
+                        class="input-default"
+                        placeholder="Industry"
+                        value={industry}
+                        onChange={(e) => setIndustry(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="text"
+                        class="input-default"
+                        placeholder="Company"
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="text"
+                        class="input-default"
+                        placeholder="Position"
+                        value={position}
+                        onChange={(e) => setPosition(e.target.value)}
+                        required
+                    />
+                    <button type="submit" class="button">{isUpdating ? 'Update Profile' : 'Create Profile'}</button>
+                    {message && <p>{message}</p>}
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                </form>
+            </div>
+            </div>
+        </body>
     );
 };
 

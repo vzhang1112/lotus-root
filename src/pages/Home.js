@@ -1,10 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
+// import { getProfile } from '../utils/profileUtils.js';
+import { getFromSupabase } from '../utils/supabaseUtils.js';
 
 function Home() {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [profile, setProfile] = useState(null);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            if (!user) {
+                setError("profile.js User not authenticated");
+                return;
+            }
+
+            try {
+                console.log('Fetching profile for user:', user.id);
+                const profileResult = await getFromSupabase(user.id, "profiles");
+
+                if (!profileResult.success) {
+                    console.log('Error fetching profile:', profileResult.error);
+                    setError('Error fetching profile: ' + profileResult.error.message);
+                } else {
+                    console.log('Profile fetched:', profileResult.data);
+                    setProfile(profileResult.data);
+                }
+            } catch (error) {
+                setError("Error fetching profile: " + error.message);
+            }
+        };
+
+        fetchProfile();
+    }, [user]);
+
+    if (!profile) {
+        return <p>Loading profile...</p>;
+    }
 
     return (
         <body class="body-default">
@@ -12,7 +46,7 @@ function Home() {
                 {user ? (
                     <div>
                         <p>Home.js</p>
-                        <h1 class="text-3xl">Welcome back, {user.email}!</h1>
+                        <h1 class="text-3xl">Welcome back, {profile.display_name}!</h1>
                         <button onClick={logout}>
                             Log out</button>
                     </div>

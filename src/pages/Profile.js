@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { supabase } from '../utils/supabase.ts';
 import { useNavigate } from 'react-router-dom';
+import SwipeCard from '../components/SwipeCard.js';
 import { AuthContext } from '../context/AuthContext.js';
 import { getFromSupabase } from '../utils/supabaseUtils.js';
+import { ProfileCard } from '../components/ProfileCard.js';
 
 const Profile = () => {
-    const { user } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
     const [profile, setProfile] = useState(null);
+    const [swipeCards, setSwipeCards] = useState([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -13,55 +17,119 @@ const Profile = () => {
         const fetchProfile = async () => {
             if (!user) {
                 setError("profile.js User not authenticated");
+                console.log("User not authenticated: ", user);
                 return;
             }
 
             try {
-                console.log('Fetching profile for user:', user.id);
-                const profileResult = await getFromSupabase(user.id, "profiles");
+                const { data: profileData, error: profileError } = await getFromSupabase(user.id, "profiles");
 
-                if (!profileResult.success) {
-                    setError('Error fetching profile: ' + profileResult.error.message);
+                if (profileError) {
+                    setError('Error fetching profile: ' + profileError.message);
                 } else {
-                    console.log('Profile fetched:', profileResult.data);
-                    setProfile(profileResult.data);
+                    setProfile(profileData);
                 }
             } catch (error) {
-                setError("Error fetching profile: " + error.message);
+                setError('Error fetching profile: ' + error.message);
             }
         };
 
+        const fetchSwipeCards = async () => {
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+            if (userError) {
+                setError('Error fetching user: ' + userError.message);
+                return;
+            }
+
+            if (!user) {
+                setError('User not authenticated');
+                return;
+            }
+
+            const { data: mentorData, error: mentorError } = await supabase
+                .from('swipecards')
+                .select('*')
+                .eq('user_id', user.id)
+                .eq('role', 'mentor');
+
+            if (mentorError) {
+                setError('Error fetching mentor swipe card: ' + mentorError.message);
+                return;
+            }
+
+            const { data: seekerData, error: seekerError } = await supabase
+                .from('swipecards')
+                .select('*')
+                .eq('user_id', user.id)
+                .eq('role', 'seeker');
+
+            if (seekerError) {
+                setError('Error fetching seeker swipe card: ' + seekerError.message);
+                return;
+            }
+
+            if (!mentorData || !seekerData) {
+                setError('Error: mentorData or seekerData is undefined');
+                return;
+            }
+
+            const combinedData = [...mentorData, ...seekerData];
+            setSwipeCards(combinedData);
+        };
+
         fetchProfile();
+        fetchSwipeCards();
     }, [user]);
 
-    if (!user) {
-        return <p>Loading user...</p>;
-    }
+    const handleCreateMentorCard = () => {
+        navigate('/edit-swipe-card', {
+            state: {
+                role: "mentor",
+                availability: "available",
+            },
+        });
+    };
+
+    const handleCreateSeekerCard = () => {
+        navigate('/edit-swipe-card', {
+            state: {
+                role: "seeker",
+                availability: "available",
+            },
+        });
+    };
 
     if (error) {
         return <p style={{ color: 'red' }}>{error}</p>;
     }
 
-    if (!profile) {
-        return <p>Loading profile...</p>;
-    }
-
     return (
-        <body class="body-default">
-            <div>
-                <button type="button" onClick={() => navigate(-1)}>Back</button>
-                <h1>{profile.display_name}</h1>
-                <p class="subheading">HR Focus</p>
-                <p>{profile.hr_focus}</p>
-                <p class="subheading">Graduation Year</p>
-                <p>{profile.grad_year}</p>
-                <p class="subheading">Industry</p>
-                <p>{profile.industry}</p>
-                <p class="subheading">Company</p>
-                <p>{profile.company}</p>
-                <p class="subheading">Position</p>
-                <p>{profile.position}</p>
-                <button onClick={() => navigate('/edit-profile')}>Edit Profile</button>
+        <body>
+            <div className="body-default">
+                <div>
+                    {profile ? (
+                        <div>
+                            <ProfileCard profile={profile} />
+                            <button onClick={logout}>Log out</button>
+                        </div>
+                    ) : (
+                        <p>Loading profile...</p>
+                    )}
+                </div>
+                <div>
+                    {swipeCards.length ? (
+                        swipeCards.map((swipeCard) => (
+                            <SwipeCard key={swipeCard.id} swipeCard={swipeCard} />
+                        ))
+                    ) : (
+                        <div>
+                            <p>Create your own swipe card!</p>
+                            <button onClick={handleCreateMentorCard}>Become a mentor</button>
+                            <button onClick={handleCreateSeekerCard}>Become a seeker</button>
+                        </div>
+                    )}
+                </div>
             </div>
         </body>
     );

@@ -9,11 +9,6 @@ const AuthLinks = ({ toggleDropdown, dropdownVisible, handleLogout }) => (
             </Link>
         </li>
         <li>
-            <Link to="/my-swipe-cards" className="text-light hover:text-light-hover">
-                My Swipe Cards
-            </Link>
-        </li>
-        <li>
             <Link to="/swipe-on-people" className="text-light hover:text-light-hover">
                 Swipe on others
             </Link>
@@ -21,7 +16,7 @@ const AuthLinks = ({ toggleDropdown, dropdownVisible, handleLogout }) => (
         <li className="text-light hover:text-light-hover relative group">
             <button onClick={toggleDropdown}>Account</button>
             {dropdownVisible && (
-                <div className="absolute left-0 w-24 bg-blue-200 shadow-lg rounded-lg px-2 py-1 transform scale-95 transition-all duration-200 z-60">
+                <div className="absolute left-0 w-24 bg-secondary shadow-lg rounded-lg px-2 py-1 transform scale-95 transition-all duration-200 z-60">
                     <ul>
                         <li>
                             <Link to="/profile" className="text-light hover:text-light-hover">

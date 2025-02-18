@@ -10,7 +10,6 @@ import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Profile from './pages/Profile';
 import ProfileForm from './components/ProfileForm';
-import MySwipeCards from './pages/MySwipeCards.js'
 import SwipeCardForm from './components/SwipeCardForm.js';
 import NavBar from './components/NavBar';
 import LandingPage from './pages/LandingPage.js';
@@ -96,16 +95,6 @@ const App = () => {
                     />
 
                     {/* swipecard related routes */}
-                    <Route
-                        path="/my-swipe-cards"
-                        element={
-                            user && user.email_confirmed_at ? (
-                                <MySwipeCards />
-                            ) : (
-                                <Navigate to="/login" />
-                            )
-                        }
-                    />
                     <Route
                         path="/edit-swipe-card"
                         element={
