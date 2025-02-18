@@ -593,6 +593,9 @@
   .mx-auto {
     margin-inline: auto;
   }
+  .me-2 {
+    margin-inline-end: calc(var(--spacing) * 2);
+  }
   .-mt-14 {
     margin-top: calc(var(--spacing) * -14);
   }
@@ -725,9 +728,6 @@
     border-style: var(--tw-border-style);
     border-width: 4px;
   }
-  .border-secondary {
-    border-color: var(--color-secondary);
-  }
   .bg-background {
     background-color: var(--color-background);
   }
@@ -749,11 +749,14 @@
   .p-6 {
     padding: calc(var(--spacing) * 6);
   }
-  .p-20 {
-    padding: calc(var(--spacing) * 20);
-  }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
+  }
+  .px-2\.5 {
+    padding-inline: calc(var(--spacing) * 2.5);
+  }
+  .py-0\.5 {
+    padding-block: calc(var(--spacing) * 0.5);
   }
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
@@ -787,6 +790,10 @@
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
+  }
+  .font-medium {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
   }
   .text-balance {
     text-wrap: balance;
@@ -912,6 +919,11 @@
   .xl\:mt-40 {
     @media (width >= 80rem) {
       margin-top: calc(var(--spacing) * 40);
+    }
+  }
+  .dark\:bg-dark-secondary {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-dark-secondary);
     }
   }
   .dark\:text-dark-text {

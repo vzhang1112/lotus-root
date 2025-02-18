@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SwipeCard from '../components/SwipeCard.js';
 import { AuthContext } from '../context/AuthContext.js';
 import { getFromSupabase } from '../utils/supabaseUtils.js';
-import { ProfileCard } from '../components/ProfileCard.js';
+import ProfileCard from '../components/ProfileCard.js';
 
 const Profile = () => {
     const { user, logout } = useContext(AuthContext);
@@ -100,24 +100,33 @@ const Profile = () => {
         });
     };
 
+    const handleEditProfile = () => {
+        navigate('/edit-profile');
+    };
+
+    if (error) {
+        return <p style={{ color: 'red' }}>{error}</p>;
+    }
+
     if (error) {
         return <p style={{ color: 'red' }}>{error}</p>;
     }
 
     return (
-        <body>
-            <div className="body-default">
-                <div>
+        <body class="body-default">
+            <div class="h-screen md:flex">
+                <div class="md:flex w-1/2 items-center justify-center">
                     {profile ? (
                         <div>
                             <ProfileCard profile={profile} />
-                            <button onClick={logout}>Log out</button>
+                            <br></br>
+                            <button onClick={handleEditProfile}>Edit profile</button>
                         </div>
                     ) : (
                         <p>Loading profile...</p>
                     )}
                 </div>
-                <div>
+                <div className="md:flex w-1/2 min-h-svh items-center justify-center">
                     {swipeCards.length ? (
                         swipeCards.map((swipeCard) => (
                             <SwipeCard key={swipeCard.id} swipeCard={swipeCard} />
@@ -126,6 +135,7 @@ const Profile = () => {
                         <div>
                             <p>Create your own swipe card!</p>
                             <button onClick={handleCreateMentorCard}>Become a mentor</button>
+                            <br></br>
                             <button onClick={handleCreateSeekerCard}>Become a seeker</button>
                         </div>
                     )}

@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProfileCard = ({ profile }) => {
     return (
-        <article className="group shadow-lg flex rounded-radius max-w-xs flex-col overflow-hidden border border-outline bg-surface-alt text-on-surface dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark">
+        <div className="group shadow-lg flex rounded-lg max-w-xs flex-col overflow-hidden border border-outline bg-surface-alt text-on-surface dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark">
             {/* <!-- Images --> */}
             <div className="relative h-36">
                 <img src="https://penguinui.s3.amazonaws.com/component-assets/card-img-5.gif" className="h-full w-full object-cover" alt="cover photo" />
@@ -34,7 +34,7 @@ const ProfileCard = ({ profile }) => {
                     </a>
                 </div>
             </div>
-        </article>
+        </div>
     );
 };
 

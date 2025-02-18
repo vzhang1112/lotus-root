@@ -73,6 +73,13 @@ const SwipeCardForm = () => {
         setQuestions(newQuestions);
     };
 
+    const handleAddQuestion = () => {
+        if (questions.length < 3) {
+            const newQuestion = { id: (questions.length + 1).toString(), question: '', answer: '' };
+            setQuestions([...questions, newQuestion]);
+        }
+    };
+
     const handleBlurbChange = (e) => {
         const value = e.target.value;
         const words = value.trim().split(/\s+/);
@@ -154,64 +161,71 @@ const SwipeCardForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <textarea
-                placeholder="Personal Blurb"
-                class="input-default"
-                value={personalBlurb}
-                onChange={handleBlurbChange}
-            />
-            <p>{wordCounts.blurb}/{LONG_LIMIT}</p>
-            <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="questions">
-                    {(provided) => (
-                        <div {...provided.droppableProps} ref={provided.innerRef}>
-                            {questions.map((q, index) => (
-                                <Draggable key={q.id} draggableId={q.id} index={index}>
-                                    {(provided) => (
-                                        <div
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
-                                        >
-                                            <select
-                                                value={q.question}
-                                                onChange={(e) => handlePresetQuestionChange(index, e.target.value)}
+        <div className="body-default">
+            <form onSubmit={handleSubmit}>
+                <textarea
+                    placeholder="Personal Blurb"
+                    className="input-default"
+                    value={personalBlurb}
+                    onChange={handleBlurbChange}
+                />
+                <p>{wordCounts.blurb}/{LONG_LIMIT}</p>
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="questions">
+                        {(provided) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef}>
+                                {questions.map((q, index) => (
+                                    <Draggable key={q.id} draggableId={q.id} index={index}>
+                                        {(provided) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                className="draggable-item"
                                             >
-                                                <option value="">Select a question</option>
-                                                {PRESET_QUESTIONS.map((PRESET_QUESTIONS, i) => (
-                                                    <option key={i} value={PRESET_QUESTIONS}>{PRESET_QUESTIONS}</option>
-                                                ))}
-                                            </select>
-                                            <input
-                                                type="text"
-                                                class="input-default"
-                                                placeholder={'Your answer here'}
-                                                value={q.answer}
-                                                onChange={(e) => handleAnswerChange(index, e.target.value)}
-                                            />
-                                            <p>{wordCounts[`answer${index + 1}`]}/{SHORT_LIMIT}</p>
-                                            <button type="button" onClick={() => handleRemoveQuestion(index)}>Remove</button>
-                                        </div>
-                                    )}
-                                </Draggable>
-                            ))}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            </DragDropContext>
-            <textarea
-                placeholder="General availability (ex. weekdays after 5pm, tu/wed at lunch)"
-                value={availability}
-                onChange={handleAvailabilityChange}
-                class="input-default"
-            />
-            <button type="button" class="button" onClick={handleBack}>Cancel without saving</button>
-            <button type="submit" class="button">{isUpdating ? 'Update Swipe Card' : 'Create Swipe Card'}</button>
-            {message && <p>{message}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-        </form>
+                                                <span {...provided.dragHandleProps} className="drag-handle">☰</span>
+                                                <select
+                                                    value={q.question}
+                                                    onChange={(e) => handlePresetQuestionChange(index, e.target.value)}
+                                                >
+                                                    <option value="">Select a question</option>
+                                                    {PRESET_QUESTIONS.map((PRESET_QUESTIONS, i) => (
+                                                        <option key={i} value={PRESET_QUESTIONS}>{PRESET_QUESTIONS}</option>
+                                                    ))}
+                                                </select>
+                                                <input
+                                                    type="text"
+                                                    className="input-default"
+                                                    placeholder={'Your answer here'}
+                                                    value={q.answer}
+                                                    onChange={(e) => handleAnswerChange(index, e.target.value)}
+                                                />
+                                                <p>{wordCounts[`answer${index + 1}`]}/{SHORT_LIMIT}</p>
+                                                <button type="button" onClick={() => handleRemoveQuestion(index)}>Remove</button>
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+                {questions.length < 3 && (
+                    <button type="button" onClick={handleAddQuestion}>Add Question</button>
+                )}
+                <textarea
+                    placeholder="General availability (ex. weekdays after 5pm, tu/wed at lunch)"
+                    value={availability}
+                    onChange={handleAvailabilityChange}
+                    className="input-default"
+                />
+                <button type="button" className="button" onClick={handleBack}>Cancel without saving</button>
+                <button type="submit" className="button">{isUpdating ? 'Update Swipe Card' : 'Create Swipe Card'}</button>
+                {message && <p>{message}</p>}
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+            </form>
+        </div>
     );
 };
 
