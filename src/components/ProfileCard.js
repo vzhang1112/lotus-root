@@ -14,7 +14,7 @@ const ProfileCard = ({ profile }) => {
             {/* <!-- Body --> */}
             <div className="flex flex-col gap-2 p-6 text-center mt-12">
                 <h3 className="text-balance text-xl font-bold text-on-surface-strong lg:text-2xl dark:text-on-surface-dark-strong" aria-describedby="profileDescription">{profile.display_name}</h3>
-                <span className="mx-auto w-fit bg-primary px-2 py-1 text-xs text-background dark:bg-primary-dark dark:text-on-primary-dark rounded-radius">{profile.hr_focus.toUpperCase()} {profile.grad_year}</span>
+                <span className="mx-auto w-fit bg-primary px-2 py-1 text-xs text-invert dark:bg-primary-dark dark:text-on-primary-dark rounded-radius">{profile.hr_focus.toUpperCase()} {profile.grad_year}</span>
                 <p>Working in the {profile.industry} industry at {profile.company} as a {profile.position}</p>
 
                 {/* <!-- Social Links --> */}
