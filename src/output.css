@@ -708,8 +708,8 @@
   .overflow-hidden {
     overflow: hidden;
   }
-  .rounded-full {
-    border-radius: calc(infinity * 1px);
+  .rounded-\[100\%\] {
+    border-radius: 100%;
   }
   .rounded-lg {
     border-radius: var(--radius-lg);
