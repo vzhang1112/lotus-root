@@ -44,6 +44,7 @@ function Home() {
         <body class="body-default">
             <div class="h-screen md:flex">
                 <div class="md:flex w-1/2">
+                    <div class="steam-pixelart"></div>
                     <div class="coffee-pixelart"></div>
                 </div>
                 <div className="md:flex w-1/2">

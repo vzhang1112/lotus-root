@@ -1,18 +1,22 @@
-import Auth from "../components/Auth.js"
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext.js';
+import AuthForm from '../components/AuthForm.js';
 
+const SignUp = () => {
+    const { signup } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-function Signup() {
+    const handleSignUp = async (email, password) => {
+        const error = await signup(email, password);
+        if (error) {
+            console.error('Sign up error:', error);
+            return;
+        }
+        navigate('/email-verification');
+    };
 
-    return (
-        <body class="body-default">
-            {/* <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10"> */}
-            <div>
-                <div className="w-full max-w-sm">
-                    <Auth initialIsLogin={false}/>
-                </div>
-            </div>
-        </body>
-    );
-}
+    return <AuthForm isLogin={false} onSubmit={handleSignUp} />;
+};
 
-export default Signup;
+export default SignUp;

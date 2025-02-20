@@ -6,10 +6,13 @@ import { AuthProvider } from './context/AuthContext.js';
 import SwipingPage from './pages/SwipingPage.js';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import EmailVerification from './pages/EmailVerification.js';
+import VerifyEmailRedirect from './components/VerifyEmailRedirect.js';
+import ProfileInitialization from './pages/ProfileInitialization.js';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Profile from './pages/Profile';
-import ProfileForm from './components/ProfileForm';
+import EditProfile from './pages/EditProfile';
 import SwipeCardForm from './components/SwipeCardForm.js';
 import NavBar from './components/NavBar';
 import LandingPage from './pages/LandingPage.js';
@@ -59,8 +62,11 @@ const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/email-verification" element={<EmailVerification />} />
+                    <Route path="/profile-initialization" element={<ProfileInitialization />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/verify-email-redirect" element={<VerifyEmailRedirect />} />
 
                     {/* protected routes */}
                     <Route
@@ -77,7 +83,7 @@ const App = () => {
                         path="/edit-profile"
                         element={
                             user && user.email_confirmed_at ? (
-                                <ProfileForm />
+                                <EditProfile />
                             ) : (
                                 <Navigate to="/login" />
                             )
