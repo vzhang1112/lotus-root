@@ -8,7 +8,7 @@ function Home() {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
-    const [setError] = useState('');
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -30,6 +30,7 @@ function Home() {
                 }
             } catch (error) {
                 setError("Error fetching profile: " + error.message);
+                console.log(error);
             }
         };
 
