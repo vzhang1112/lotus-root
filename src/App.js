@@ -20,7 +20,7 @@ import './output.css';
 const App = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [profileInitialized, setProfileInitialized] = useState(false);
+    const [setProfileInitialized] = useState(false);
 
     useEffect(() => {
         const fetchUserAndProfile = async () => {

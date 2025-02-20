@@ -7,7 +7,7 @@ import { getFromSupabase } from '../utils/supabaseUtils.js';
 import ProfileCard from '../components/ProfileCard.js';
 
 const Profile = () => {
-    const { user, logout } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const [profile, setProfile] = useState(null);
     const [swipeCards, setSwipeCards] = useState([]);
     const [error, setError] = useState('');
