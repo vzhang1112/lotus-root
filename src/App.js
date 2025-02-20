@@ -46,7 +46,7 @@ const App = () => {
         };
 
         fetchUserAndProfile();
-    }, []);
+    }, [setProfileInitialized]);
 
     if (loading) return <p>Loading...</p>;
 
