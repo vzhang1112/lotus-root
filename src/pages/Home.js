@@ -30,6 +30,7 @@ function Home() {
                 }
             } catch (error) {
                 setError("Error fetching profile: " + error.message);
+                console.log(error);
             }
         };
 
