@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AuthForm = ({ isLogin, onSubmit }) => {
+const AuthForm = ({ isLogin, onSubmit, errorMessage }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -48,7 +48,7 @@ const AuthForm = ({ isLogin, onSubmit }) => {
                         required
                     />
                 </div>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {(error || errorMessage) && <p style={{ color: 'red' }}>{error || errorMessage}</p>}
                 <button type="submit" className="button mt-4">
                     {isLogin ? 'Login' : 'Sign Up'}
                 </button>

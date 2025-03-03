@@ -27,6 +27,7 @@ const NavBar = () => {
                         Lotus Root
                     </h2>
                 </Link>
+                <p>Auth context: {user ? user.email : 'none'}</p>
                 <ul className="hidden md:flex space-x-6 items-center">
                     {user ? (
                         <AuthLinks 

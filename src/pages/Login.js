@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 import AuthForm from '../components/AuthForm.js';
@@ -6,17 +6,18 @@ import AuthForm from '../components/AuthForm.js';
 const Login = () => {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleLogin = async (email, password) => {
         const error = await login(email, password);
         if (error) {
-            console.error('Login error:', error);
+            setErrorMessage(error);
             return;
         }
-        navigate('/home');
+        navigate('/');
     };
 
-    return <AuthForm isLogin={true} onSubmit={handleLogin} />;
+    return <AuthForm isLogin={true} onSubmit={handleLogin} errorMessage={errorMessage} />;
 };
 
 export default Login;

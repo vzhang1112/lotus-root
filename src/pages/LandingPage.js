@@ -16,7 +16,7 @@ function LandingPage() {
     }
 
     return (
-        <body class="body-default">
+        <div class="body-default">
             <div>
                 <p>LandingPage.js</p>
                 <h1>h1: I have no idea what I'm doing</h1>
@@ -27,7 +27,7 @@ function LandingPage() {
                 <p>p: I'm also going to use this page as a font size tester</p>
                 <button onClick={handleLogout}>Log out</button>
             </div>
-        </body>
+        </div>
     );
 }
 

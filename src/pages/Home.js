@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
-// import { getProfile } from '../utils/profileUtils.js';
 import { getFromSupabase } from '../utils/supabaseUtils.js';
 
 function Home() {
@@ -13,7 +12,7 @@ function Home() {
     useEffect(() => {
         const fetchProfile = async () => {
             if (!user) {
-                setError("profile.js User not authenticated");
+                setError("User not authenticated");
                 return;
             }
 
@@ -37,12 +36,8 @@ function Home() {
         fetchProfile();
     }, [user]);
 
-    if (!profile) {
-        return <p>Loading profile...</p>;
-    }
-
     return (
-        <body class="body-default">
+        <div class="body-default">
             <div class="h-screen md:flex">
                 <div class="md:flex w-1/2">
                     <div class="steam-pixelart"></div>
@@ -52,9 +47,10 @@ function Home() {
                     {user ? (
                         <div>
                             <p>Home.js</p>
-                            <h1 class="text-3xl">Welcome back, {profile.display_name}!</h1>
+                            <h1 class="text-3xl">Welcome back, {profile ? profile.display_name : 'Guest'}!</h1>
                             <button onClick={logout}>
-                                Log out</button>
+                                Log out
+                            </button>
                         </div>
                     ) : (
                         <div class="mt-16 sm:mt-20 md:mt-24 lg:mt-32 xl:mt-40 mx-auto max-w-4xl p-6">
@@ -62,15 +58,15 @@ function Home() {
                             <h1 className="text-3xl">Welcome to Lotus Root!</h1>
                             <button onClick={() => navigate('/login')}>
                                 Log in
-                                </button>
+                            </button>
                             <button onClick={() => navigate('/signup')}>
                                 Sign up
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                            </button>
+                        </div>
+                    )}
                 </div>
-        </body>    
+            </div>
+        </div>    
     );
 }
 

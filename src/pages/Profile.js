@@ -108,14 +108,11 @@ const Profile = () => {
         return <p style={{ color: 'red' }}>{error}</p>;
     }
 
-    if (error) {
-        return <p style={{ color: 'red' }}>{error}</p>;
-    }
 
     return (
-        <body class="body-default">
-            <div class="h-screen md:flex">
-                <div class="md:flex w-1/2 items-center justify-center">
+        <div className="body-default">
+            <div className="h-screen md:flex">
+                <div className="md:flex w-1/2 items-center justify-center">
                     {profile ? (
                         <div>
                             <ProfileCard profile={profile} />
@@ -123,7 +120,9 @@ const Profile = () => {
                             <button onClick={handleEditProfile}>Edit profile</button>
                         </div>
                     ) : (
-                        <p>Loading profile...</p>
+                        <div>
+                            <button onClick={handleEditProfile}>Create profile</button>
+                        </div>
                     )}
                 </div>
                 <div className="md:flex w-1/2 min-h-svh items-center justify-center">
@@ -141,7 +140,7 @@ const Profile = () => {
                     )}
                 </div>
             </div>
-        </body>
+        </div>
     );
 };
 

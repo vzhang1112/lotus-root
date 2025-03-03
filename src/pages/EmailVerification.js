@@ -1,15 +1,23 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext.js';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../utils/supabase.ts';
 
 const EmailVerification = () => {
-    const { user } = useContext(AuthContext);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [email, setEmail] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const emailParam = queryParams.get('email');
+        if (emailParam) {
+            setEmail(emailParam);
+        } else {
+            setError('No email provided for verification.');
+        }
+
         const checkEmailVerified = async () => {
             const { data, error } = await supabase.auth.getUser();
             if (error) {
@@ -23,12 +31,12 @@ const EmailVerification = () => {
         };
 
         checkEmailVerified();
-    }, [navigate]);
+    }, [navigate, location.search]);
 
     const resendVerificationEmail = async () => {
         const { error } = await supabase.auth.resend({
             type: 'signup',
-            email: user.email,
+            email: email,
             options: {
                 emailRedirectTo: `${window.location.origin}/verify-email-redirect`
             }
@@ -43,14 +51,20 @@ const EmailVerification = () => {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="bg-white shadow-lg p-6 md:p-10 rounded-lg">
-                <p>user email: {user.email}</p>
-                <h1 className="text-lg font-bold">Verify Your Email</h1>
-                <p>Please verify your email address to continue.</p>
-                {message && <p>{message}</p>}
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button onClick={resendVerificationEmail} className="button mt-4">
-                    Resend Verification Email
-                </button>
+                {email ? (
+                    <>
+                        <p>User email: {email}</p>
+                        <h1 className="text-lg font-bold">Verify Your Email</h1>
+                        <p>Please verify your email address to continue.</p>
+                        {message && <p>{message}</p>}
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
+                        <button onClick={resendVerificationEmail} className="button mt-4">
+                            Resend Verification Email
+                        </button>
+                    </>
+                ) : (
+                    <p>Loading...</p>
+                )}
             </div>
         </div>
     );
