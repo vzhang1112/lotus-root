@@ -38,7 +38,7 @@ const EmailVerification = () => {
             type: 'signup',
             email: email,
             options: {
-                emailRedirectTo: `${window.location.origin}/verify-email-redirect`
+                emailRedirectTo: `${window.location.origin}/profile-initialization`
             }
         });
         if (error) {
