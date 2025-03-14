@@ -39,10 +39,10 @@ function Home() {
     return (
         <div class="body-default">
             <div class="h-screen md:flex">
-                <div class="md:flex w-1/2">
+                {/* <div class="md:flex w-1/2">
                     <div class="steam-pixelart"></div>
                     <div class="coffee-pixelart"></div>
-                </div>
+                </div> */}
                 <div className="md:flex w-1/2">
                     {user ? (
                         <div>

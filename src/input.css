@@ -160,54 +160,6 @@
     .input-default.dark:focus-visible {
         outline: 2px solid var(--color-primary-dark);
     }
-    .swiping-badge {
-        background-color: var(--color-accent);
-        color: var(--color-light);
-        font-size: 0.75rem; /* 12px */
-        font-weight: 500;
-        margin-right: 0.5rem; /* 8px */
-        padding-left: 0.625rem; /* 10px */
-        padding-right: 0.625rem; /* 10px */
-        padding-top: 0.125rem; /* 2px */
-        padding-bottom: 0.125rem; /* 2px */
-        border-radius: 9999px;
-    }
-    
-    .dark .swiping-badge {
-        background-color: var(--color-dark-secondary);
-        color: var(--color-dark-text);
-    }
-
-    .swipecard-template {
-        padding: 1.5rem;
-    }
-    
-    @media (min-width: 768px) {
-        .swipecard-template {
-            padding: 2.5rem;
-        }
-    }
-    
-    .swipecard-template {
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        border-radius: 0.5rem; /* 8px */
-        max-width: 20rem; /* 320px */
-        flex-direction: column;
-        overflow: hidden;
-        border-width: 1.5px;
-        border-color: var(--color-primary); /* Assuming --color-outline is defined in your CSS variables */
-        background-color: var(--color-background); /* Assuming --color-surface-alt is defined in your CSS variables */
-        color: var(--color-light); /* Assuming --color-on-surface is defined in your CSS variables */
-    }
-    
-    .dark swipecard-template {
-        border-color: var(--color-outline-dark); /* Assuming --color-outline-dark is defined in your CSS variables */
-        background-color: var(--color-surface-dark-alt); /* Assuming --color-surface-dark-alt is defined in your CSS variables */
-        color: var(--color-on-surface-dark); /* Assuming --color-on-surface-dark is defined in your CSS variables */
-    }
 
     /* @keyframes pixelCoffeeTransition {
         0% {

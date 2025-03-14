@@ -8,11 +8,6 @@ const AuthLinks = ({ toggleDropdown, dropdownVisible, handleLogout }) => (
                 Landing Page
             </Link>
         </li>
-        <li>
-            <Link to="/swipe-on-people" className="text-light hover:text-light-hover">
-                Swipe on others
-            </Link>
-        </li>
         <li className="text-light hover:text-light-hover relative group">
             <button onClick={toggleDropdown}>Account</button>
             {dropdownVisible && (

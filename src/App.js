@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
-import SwipingPage from './pages/SwipingPage.js';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import EmailVerification from './pages/EmailVerification.js';
@@ -11,7 +10,6 @@ import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
-import SwipeCardForm from './components/SwipeCardForm.js';
 import NavBar from './components/NavBar';
 import LandingPage from './pages/LandingPage.js';
 import { getFromSupabase } from './utils/supabaseUtils.js';
@@ -85,28 +83,6 @@ const App = () => {
                             <Navigate to="/" />
                         )
                     } 
-                />
-
-                {/* swipecard related routes */}
-                <Route
-                    path="/edit-swipe-card"
-                    element={
-                        user && user.email_confirmed_at ? (
-                            <SwipeCardForm />
-                        ) : (
-                            <Navigate to="/login" />
-                        )
-                    }
-                />
-                <Route
-                    path="/swipe-on-people"
-                    element={
-                        user && user.email_confirmed_at ? (
-                            <SwipingPage />
-                        ) : (
-                            <Navigate to="/login" />
-                        )
-                    }
                 />
             </Routes>
         </Router>
