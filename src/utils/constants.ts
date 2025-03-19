@@ -20,3 +20,26 @@ export const HR_FIELDS = [
     'Recruitment and Selection',
     'Training and Development'
 ] as Array<string>;
+
+export const INDUSTRY = [
+    'Agriculture, forestry, fishing, and hunting', 
+    'Mining, quarrying, and oil and gas extraction', 
+    'Utilities', 
+    'Construction', 
+    'Manufacturing', 
+    'Wholesale trade', 
+    'Retail trade', 
+    'Transportation and warehousing', 
+    'Information and cultural industries', 
+    'Finance and insurance', 
+    'Real estate and rental and leasing', 
+    'Professional, scientific, and technical services', 
+    'Management of companies and enterprises', 
+    'Administrative and support, waste management, and remediation services', 
+    'Educational services', 
+    'Healthcare and social assistance', 
+    'Arts, entertainment, and recreation', 
+    'Accommodation and food services', 
+    'Other services, excluding public administration', 
+    'Public administration'
+] as Array<string>;

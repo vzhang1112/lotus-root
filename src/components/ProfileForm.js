@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 import { createProfile, updateProfile } from '../utils/profileUtils.js';
+import { HR_FIELDS, INDUSTRY } from '../utils/constants.ts';
 
 const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
     const { user } = useContext(AuthContext);
@@ -64,14 +65,17 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
                 onChange={(e) => setDisplayName(e.target.value)}
                 required
             />
-            <input
-                type="text"
+            <select
                 className="input-default"
-                placeholder="HR Focus"
                 value={hrFocus}
                 onChange={(e) => setHrFocus(e.target.value)}
                 required
-            />
+            >
+                <option value="" disabled>Select HR Focus</option>
+                {HR_FIELDS.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                ))}
+            </select>
             <input
                 type="text"
                 className="input-default"
@@ -80,14 +84,17 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
                 onChange={(e) => setGradYear(e.target.value)}
                 required
             />
-            <input
-                type="text"
+            <select
                 className="input-default"
-                placeholder="Industry"
                 value={industry}
                 onChange={(e) => setIndustry(e.target.value)}
                 required
-            />
+            >
+                <option value="" disabled>Select Industry</option>
+                {INDUSTRY.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                ))}
+            </select>
             <input
                 type="text"
                 className="input-default"
