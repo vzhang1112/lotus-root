@@ -5,18 +5,19 @@ export const getProfile = async (userId) => {
         const { data, error } = await supabase
             .from('profiles')
             .select('*')
-            .eq('user_id', userId);
+            .eq('user_id', userId)
+            .single();
 
         if (error) {
             console.error('Error fetching profile:', error);
-            return { error };
+            return { success: false, error };
         }
 
         console.log('Profile fetched:', data);
-        return { data };
+        return { success: true, data };
     } catch (error) {
         console.error('Unexpected error fetching profile:', error);
-        return { error };
+        return { success: false, error };
     }
 };
 

@@ -9,7 +9,7 @@ const EditProfile = () => {
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -27,7 +27,7 @@ const EditProfile = () => {
                 if (profileResult.success && profileResult.data) {
                     setProfileData(profileResult.data);
                 } else {
-                    setError("Error fetching profile: " + profileResult.error.message);
+                    setError("Error fetching profile: " + (profileResult.error?.message || 'Unknown error'));
                 }
             } catch (error) {
                 setError("Error fetching profile: " + error.message);
@@ -43,9 +43,9 @@ const EditProfile = () => {
         return <p>Loading profile...</p>;
     }
 
-    if (!user) {
-        return <p>User not authenticated</p>;
-    }
+    // if (!user) {
+    //     return <p>User not authenticated</p>;
+    // }
 
     if (error) {
         return <p style={{ color: 'red' }}>{error}</p>;
@@ -53,6 +53,7 @@ const EditProfile = () => {
 
     return (
         <div className="flex justify-center items-center h-screen">
+            <h1>Edit Profile</h1>
             <ProfileForm initialData={profileData} isUpdating={true} />
         </div>
     );
