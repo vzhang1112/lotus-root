@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 import { createProfile, updateProfile } from '../utils/profileUtils.js';
 import { HR_FIELDS, INDUSTRY } from '../utils/constants.ts';
+import { isValidUrl } from '../utils/validation.js';
 
 const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
     const { user } = useContext(AuthContext);
@@ -28,8 +29,8 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
             return;
         }
 
-        if (linkedinUrl && !linkedinUrl.includes('linkedin.com')) {
-            setError('LinkedIn URL must include "linkedin.com"');
+        if (linkedinUrl && !isValidUrl(linkedinUrl, 'linkedin.com')) {
+            setError('LinkedIn URL must be a valid URL and include "linkedin.com"');
             return;
         }
 
@@ -63,8 +64,8 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
     };
 
     const handleLinkedinBlur = () => {
-        if (linkedinUrl && !linkedinUrl.includes('linkedin.com')) {
-            setError('LinkedIn URL must include "linkedin.com"');
+        if (linkedinUrl && !isValidUrl(linkedinUrl, 'linkedin.com')) {
+            setError('LinkedIn URL must be a valid URL and include "linkedin.com"');
         } else {
             setError('');
         }
