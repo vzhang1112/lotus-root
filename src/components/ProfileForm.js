@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 import { createProfile, updateProfile } from '../utils/profileUtils.js';
 import { HR_FIELDS, INDUSTRY } from '../utils/constants.ts';
-import { isValidUrl } from '../utils/validation.js';
+import { isValidUrl } from '../utils/validationUtils.js';
 
 const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
     const { user } = useContext(AuthContext);

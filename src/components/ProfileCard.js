@@ -1,6 +1,6 @@
 import React from 'react';
 import DOMPurify from 'dompurify';
-import { isValidUrl } from '../utils/validation.js';
+import { isValidUrl } from '../utils/validationUtils.js';
 
 const ProfileCard = ({ profile }) => {
     const sanitizedDisplayName = DOMPurify.sanitize(profile.display_name);
