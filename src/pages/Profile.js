@@ -43,7 +43,6 @@ const Profile = () => {
         return <p style={{ color: 'red' }}>{error}</p>;
     }
 
-
     return (
         <div className="body-default">
             <div className="h-screen md:flex">
@@ -51,6 +50,11 @@ const Profile = () => {
                     {profile ? (
                         <div>
                             <ProfileCard profile={profile} />
+                            {profile.linkedin_url && (
+                                <p>
+                                    LinkedIn: <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer">{profile.linkedin_url}</a>
+                                </p>
+                            )}
                             <br></br>
                             <button onClick={handleEditProfile}>Edit profile</button>
                         </div>

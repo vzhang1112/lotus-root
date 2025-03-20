@@ -12,6 +12,7 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
     const [industry, setIndustry] = useState(initialData.industry || '');
     const [company, setCompany] = useState(initialData.company || '');
     const [position, setPosition] = useState(initialData.position || '');
+    const [linkedinUrl, setLinkedinUrl] = useState(initialData.linkedin_url || '');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -26,6 +27,11 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
             return;
         }
 
+        if (linkedinUrl && !linkedinUrl.includes('linkedin.com')) {
+            setError('LinkedIn URL must include "linkedin.com"');
+            return;
+        }
+
         const profileData = {
             user_id: user.id,
             display_name: displayName,
@@ -34,6 +40,7 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
             industry,
             company,
             position,
+            linkedin_url: linkedinUrl,
         };
 
         console.log('Profile Data:', profileData);
@@ -50,6 +57,14 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
         } else {
             setMessage('Profile created successfully');
             navigate('/profile');
+        }
+    };
+
+    const handleLinkedinBlur = () => {
+        if (linkedinUrl && !linkedinUrl.includes('linkedin.com')) {
+            setError('LinkedIn URL must include "linkedin.com"');
+        } else {
+            setError('');
         }
     };
 
@@ -110,6 +125,14 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
                 value={position}
                 onChange={(e) => setPosition(e.target.value)}
                 required
+            />
+            <input
+                type="url"
+                className="input-default"
+                placeholder="LinkedIn URL"
+                value={linkedinUrl}
+                onChange={(e) => setLinkedinUrl(e.target.value)}
+                onBlur={handleLinkedinBlur}
             />
             <button type="submit" className="button">{isUpdating ? 'Update Profile' : 'Create Profile'}</button>
             {message && <p>{message}</p>}
