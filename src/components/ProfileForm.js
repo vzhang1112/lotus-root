@@ -13,6 +13,7 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
     const [company, setCompany] = useState(initialData.company || '');
     const [position, setPosition] = useState(initialData.position || '');
     const [linkedinUrl, setLinkedinUrl] = useState(initialData.linkedin_url || '');
+    const [shareEmail, setShareEmail] = useState(initialData.share_email || false);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -41,6 +42,7 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
             company,
             position,
             linkedin_url: linkedinUrl,
+            share_email: shareEmail,
         };
 
         console.log('Profile Data:', profileData);
@@ -134,6 +136,14 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
                 onChange={(e) => setLinkedinUrl(e.target.value)}
                 onBlur={handleLinkedinBlur}
             />
+            <label className="flex items-center mt-4">
+                <input
+                    type="checkbox"
+                    checked={shareEmail}
+                    onChange={(e) => setShareEmail(e.target.checked)}
+                />
+                <span className="ml-2">Share my email on my profile</span>
+            </label>
             <button type="submit" className="button">{isUpdating ? 'Update Profile' : 'Create Profile'}</button>
             {message && <p>{message}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}

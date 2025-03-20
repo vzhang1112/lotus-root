@@ -46,7 +46,7 @@ const NavBar = () => {
                     {isOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
                 <div className={`absolute right-0 shadow-lg rounded-lg px-2 py-1 mr-1 md:hidden bg-accent p-4 transition-all duration-300 top-full transform ${isOpen ? "block" : "hidden"}`}>
-                    <ul className="sm:hidden space-x-6">
+                    <ul className="space-y-4">
                         {user ? (
                             <AuthLinks 
                                 toggleDropdown={toggleDropdown} 
