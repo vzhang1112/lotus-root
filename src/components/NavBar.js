@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 import { Menu, X } from "lucide-react";
 import { AuthLinks, GuestLinks } from './NavLinks';
@@ -8,7 +8,6 @@ const NavBar = () => {
     const { user, logout } = useContext(AuthContext);
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const navigate = useNavigate();
 
     const toggleDropdown = () => {
         setDropdownVisible(!dropdownVisible);
@@ -16,7 +15,6 @@ const NavBar = () => {
 
     const handleLogout = async () => {
         await logout();
-        navigate('/');
     };
 
     return (
@@ -27,7 +25,6 @@ const NavBar = () => {
                         Lotus Root
                     </h2>
                 </Link>
-                <p>Auth context: {user ? user.email : 'none'}</p>
                 <ul className="hidden md:flex space-x-6 items-center">
                     {user ? (
                         <AuthLinks 
