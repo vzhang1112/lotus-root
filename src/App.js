@@ -16,6 +16,7 @@ import { getFromSupabase } from './utils/supabaseUtils.js';
 import './input.css';
 import './output.css';
 import { AuthProvider, AuthContext } from './context/AuthContext.js';
+import ProtectedRoute from './components/ProtectedRoute.js';
 
 const App = () => {
     const { user, loading } = useContext(AuthContext);
@@ -54,36 +55,9 @@ const App = () => {
                 <Route path="/verify-email-redirect" element={<VerifyEmailRedirect />} />
 
                 {/* protected routes */}
-                <Route
-                    path="/profile"
-                    element={
-                        user && user.email_confirmed_at ? (
-                            <Profile />
-                        ) : (
-                            <Navigate to="/login" />
-                        )
-                    }
-                />
-                <Route
-                    path="/edit-profile"
-                    element={
-                        user && user.email_confirmed_at ? (
-                            <EditProfile />
-                        ) : (
-                            <Navigate to="/login" />
-                        )
-                    }
-                />
-                <Route 
-                    path="/landing-page" 
-                    element={
-                        user && user.email_confirmed_at ? (
-                            <LandingPage />
-                        ) : (
-                            <Navigate to="/" />
-                        )
-                    } 
-                />
+                <ProtectedRoute path="/profile" element={Profile} />
+                <ProtectedRoute path="/edit-profile" element={EditProfile} />
+                <ProtectedRoute path="/landing-page" element={LandingPage} />
             </Routes>
         </Router>
     );
