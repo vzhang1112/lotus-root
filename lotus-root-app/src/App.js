@@ -55,9 +55,9 @@ const App = () => {
                 <Route path="/verify-email-redirect" element={<VerifyEmailRedirect />} />
 
                 {/* protected routes */}
-                <ProtectedRoute path="/profile" element={Profile} />
-                <ProtectedRoute path="/edit-profile" element={EditProfile} />
-                <ProtectedRoute path="/landing-page" element={LandingPage} />
+                <Route path="/profile" element={<ProtectedRoute element={Profile} />} />
+                <Route path="/edit-profile" element={<ProtectedRoute element={EditProfile} />} />
+                <Route path="/landing-page" element={<ProtectedRoute element={LandingPage} />} />
             </Routes>
         </Router>
     );
