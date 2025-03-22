@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../utils/supabase.ts';
+import { supabase } from '../../../shared/supabase.ts';
 
 const ResetPassword = () => {
     const [password, setPassword] = useState('');

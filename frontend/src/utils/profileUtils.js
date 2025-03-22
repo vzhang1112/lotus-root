@@ -1,4 +1,4 @@
-import { supabase } from './supabase.ts';
+import { supabase } from '../../../shared/supabase.ts';
 
 export const getProfile = async (userId) => {
     try {

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
-import { supabase } from '../utils/supabase.ts';
+import { supabase } from '../../../shared/supabase.ts';
 
 const VerifyEmailRedirect = () => {
     const { setUser } = useContext(AuthContext);
