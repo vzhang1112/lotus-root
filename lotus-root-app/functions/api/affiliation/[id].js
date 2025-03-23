@@ -1,7 +1,7 @@
 import {
   getAffiliationsByUserId,
   deleteAffiliation,
-} from '../../shared/affiliationModel.js';
+} from '../../shared/models/affiliationModel.js';
 
 export async function onRequest({ request, params }) {
   const id = params.id;
