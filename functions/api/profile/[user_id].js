@@ -1,0 +1,38 @@
+import {
+  getProfile,
+  updateProfile
+} from '../../../shared/models/profileModel.js';
+
+export async function onRequest({ request, params, env }) {
+  const userId = params.user_id;
+
+  if (request.method === 'GET') {
+    const { data, error } = await getProfile(userId, env);
+    if (error) {
+      return new Response(JSON.stringify({ success: false, error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    return new Response(JSON.stringify({ success: true, data }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  if (request.method === 'PUT') {
+    const profileData = await request.json();
+    const { success, error } = await updateProfile(userId, profileData, env);
+    if (!success) {
+      return new Response(JSON.stringify({ success: false, error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    return new Response(JSON.stringify({ success: true }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  return new Response('Method Not Allowed', { status: 405 });
+}
+
