@@ -49,7 +49,7 @@ const ProfileForm = ({ initialData = {}, isUpdating = false }) => {
         console.log('Profile Data:', profileData);
 
         try {
-            const endpoint = isupdating 
+            const endpoint = isUpdating 
                 ? `/api/profile${user.id}`
                 :`/api/profile`;
         

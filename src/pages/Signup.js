@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 import AuthForm from '../components/AuthForm.js';
-import { supabase } from '../../supabase.ts';
+import { supabase } from '../utils/supabaseClient.js';
 
 const SignUp = () => {
     const { signup } = useContext(AuthContext);

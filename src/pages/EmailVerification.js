@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { supabase } from '../../supabase.ts';
+import { supabase } from '../utils/supabaseClient.js';
 
 const EmailVerification = () => {
     const [message, setMessage] = useState('');

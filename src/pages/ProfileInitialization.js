@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 import ProfileForm from '../components/ProfileForm.js';
-import { supabase } from '../../supabase.ts';
+import { supabase } from '../utils/supabaseClient.js';
 
 const ProfileInitialization = () => {
     const { user } = useContext(AuthContext);

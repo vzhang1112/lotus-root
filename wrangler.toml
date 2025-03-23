@@ -1,10 +1,10 @@
 name = "lotus-root"
-main = "src/index.js"
-compatibility_date = "2025-03-22"
+compatibility_date = "2025-03-23"
 
-[build]
-command = "npm run build"
+pages_build_output_dir = "./build"  # ← CRA output goes here
 
-# Optional environment variables or bindings can go here
-[dev]
-port = 8787
+[vars]
+
+SUPABASE_URL="https://ecvdkfcjqvwvkvxpspak.supabase.co"
+SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjdmRrZmNqcXZ3dmt2eHBzcGFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyMDg3MzAsImV4cCI6MjA0ODc4NDczMH0._EmTEMzf8aH2tLi-YlUW9CwT_cSmXrZh9sghSakrRDg"
+        

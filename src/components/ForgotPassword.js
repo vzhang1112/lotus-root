@@ -1,4 +1,4 @@
-import { supabase } from '../../supabase.ts';
+import { supabase } from '../utils/supabaseClient.js';
 import React, { useState } from 'react';
 
 const ForgotPassword = () => {
