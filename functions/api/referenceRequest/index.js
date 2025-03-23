@@ -1,12 +1,12 @@
 import {
   createReferenceRequest,
   getReferenceRequests,
-} from '../../shared/referenceRequestModel.js';
+} from '../../shared/models/referenceRequestModel.js';
 
-export async function onRequest({ request }) {
+export async function onRequest({ request, env }) {
   if (request.method === 'POST') {
     const { requester_id, organization, is_open } = await request.json();
-    const { data, error } = await createReferenceRequest(requester_id, organization, is_open);
+    const { data, error } = await createReferenceRequest(requester_id, organization, is_open, env);
 
     if (error) {
       return new Response(
@@ -24,7 +24,7 @@ export async function onRequest({ request }) {
   }
 
   if (request.method === 'GET') {
-    const { data, error } = await getReferenceRequests();
+    const { data, error } = await getReferenceRequests(env);
 
     if (error) {
       return new Response(

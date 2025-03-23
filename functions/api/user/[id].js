@@ -1,10 +1,10 @@
-import { getUserById, updateUser, deleteUser } from '../../shared/userModel.js';
+import { getUserById, updateUser, deleteUser } from '../../shared/models/userModel.js';
 
-export async function onRequest({ request, params }) {
+export async function onRequest({ request, params, env }) {
   const id = params.id;
 
   if (request.method === 'GET') {
-    const { data, error } = await getUserById(id);
+    const { data, error } = await getUserById(id, env);
     if (error) {
       return new Response(JSON.stringify({ success: false, error: error.message }), {
         headers: { 'Content-Type': 'application/json' },
@@ -18,7 +18,7 @@ export async function onRequest({ request, params }) {
 
   if (request.method === 'PUT') {
     const updates = await request.json();
-    const { data, error } = await updateUser(id, updates);
+    const { data, error } = await updateUser(id, updates, env);
     if (error) {
       return new Response(JSON.stringify({ success: false, error: error.message }), {
         headers: { 'Content-Type': 'application/json' },
@@ -31,7 +31,7 @@ export async function onRequest({ request, params }) {
   }
 
   if (request.method === 'DELETE') {
-    const { data, error } = await deleteUser(id);
+    const { data, error } = await deleteUser(id, env);
     if (error) {
       return new Response(JSON.stringify({ success: false, error: error.message }), {
         headers: { 'Content-Type': 'application/json' },

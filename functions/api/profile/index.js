@@ -1,7 +1,10 @@
 import { createProfile } from '../../../shared/models/profileModel.js';
 
 export async function onRequestPost({ request, env }) {
-  const profileData = await request.json();
+
+  const body = await request.json();
+  const { profileData } = body;
+  
   const { data, error } = await createProfile(profileData, env);
 
   if (error) {

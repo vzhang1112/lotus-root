@@ -3,11 +3,11 @@ import {
   deleteAffiliation,
 } from '../../shared/models/affiliationModel.js';
 
-export async function onRequest({ request, params }) {
+export async function onRequest({ request, params, env }) {
   const id = params.id;
 
   if (request.method === 'GET') {
-    const { data, error } = await getAffiliationsByUserId(id);
+    const { data, error } = await getAffiliationsByUserId(id, env);
     if (error) {
       return new Response(JSON.stringify({ success: false, error: error.message }), {
         headers: { 'Content-Type': 'application/json' },
@@ -20,7 +20,7 @@ export async function onRequest({ request, params }) {
   }
 
   if (request.method === 'DELETE') {
-    const { data, error } = await deleteAffiliation(id);
+    const { data, error } = await deleteAffiliation(id, env);
     if (error) {
       return new Response(JSON.stringify({ success: false, error: error.message }), {
         headers: { 'Content-Type': 'application/json' },

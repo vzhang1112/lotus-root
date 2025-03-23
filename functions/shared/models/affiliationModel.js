@@ -1,13 +1,15 @@
-import { supabase } from '../../supabase.ts';
+import { createSupabase } from '../supabaseClient.js';
 
-export const createAffiliation = async (user_id, organization, searchable) => {
+export const createAffiliation = async (user_id, organization, searchable, env) => {
+    const supabase = createSupabase(env);
     const { data, error } = await supabase
         .from('affiliations')
         .insert([{ user_id, organization, searchable }]);
     return { data, error };
 };
 
-export const getAffiliationsByUserId = async (user_id) => {
+export const getAffiliationsByUserId = async (user_id, env) => {
+    const supabase = createSupabase(env);
     const { data, error } = await supabase
         .from('affiliations')
         .select('*')
@@ -15,7 +17,8 @@ export const getAffiliationsByUserId = async (user_id) => {
     return { data, error };
 };
 
-export const deleteAffiliation = async (id) => {
+export const deleteAffiliation = async (id, env) => {
+    const supabase = createSupabase(env);
     const { data, error } = await supabase
         .from('affiliations')
         .delete()
