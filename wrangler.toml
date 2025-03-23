@@ -1,8 +1,10 @@
-name = "backend"
-type = "webpack"
-route = ''
-zone_id = ''
-usage_model = ''
-compatibility_flags = []
-workers_dev = true
-compatibility_date = "2025-03-21"
+name = "lotus-root"
+main = "src/index.js"
+compatibility_date = "2025-03-22"
+
+[build]
+command = "npm run build"
+
+# Optional environment variables or bindings can go here
+[dev]
+port = 8787
