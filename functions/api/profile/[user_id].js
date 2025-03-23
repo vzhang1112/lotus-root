@@ -1,8 +1,7 @@
 import {
   getProfile,
   updateProfile
-} from '../../../shared/models/profileModel.js';
-
+} from '../../shared/models/profileModel.js';
 export async function onRequest({ request, params, env }) {
   const userId = params.user_id;
 

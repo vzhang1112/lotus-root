@@ -1,4 +1,4 @@
-import { createProfile } from '../../../shared/models/profileModel.js';
+import { createProfile } from '../../shared/models/profileModel.js';
 
 export async function onRequestPost({ request, env }) {
 
