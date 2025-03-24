@@ -19,16 +19,19 @@ const EditProfile = () => {
             }
 
             try {
-                console.log("Fetching profile for user:", user.id);
-                // const profileResult = await getProfile(user.id);
+                console.log("ENV CHECK:", env);
+                console.log("Fetching profile for user:", user.id, "type:", typeof user.id);
                 const profileResponse = await fetch(`/api/profile/${user.id}`);
+                console.log("profile response:", profileResponse);
+                const contentType = profileResponse.headers.get('Content-Type');
+                console.log("get content type:", contentType);
                 const profileResult = await profileResponse.json();
                 console.log("Profile result:", profileResult);
 
                 if (profileResult.success && profileResult.data) {
                     setProfileData(profileResult.data);
                 } else {
-                    setError("Error fetching profile: " + (profileResult.error?.message || 'Unknown error'));
+                    setError("Error fetching profile: " + profileResult + (profileResult.error?.message || 'Unknown error'));
                 }
             } catch (error) {
                 setError("Error fetching profile: " + error.message);

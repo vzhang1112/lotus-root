@@ -1,10 +1,9 @@
 name = "lotus-root"
 compatibility_date = "2025-03-23"
 
-pages_build_output_dir = "./build"  # ← CRA output goes here
+pages_build_output_dir = "./build"
 
 [vars]
-
 SUPABASE_URL="https://ecvdkfcjqvwvkvxpspak.supabase.co"
 SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjdmRrZmNqcXZ3dmt2eHBzcGFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyMDg3MzAsImV4cCI6MjA0ODc4NDczMH0._EmTEMzf8aH2tLi-YlUW9CwT_cSmXrZh9sghSakrRDg"
         
