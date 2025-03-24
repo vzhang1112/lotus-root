@@ -4,6 +4,8 @@ import {
 } from '../../shared/models/profileModel.js';
 export async function onRequest({ request, params, env }) {
   const userId = params.user_id;
+  console.log('userId', userId);
+  console.log("ENV CHECK:", env);
 
   if (request.method === 'GET') {
     const { data, error } = await getProfile(userId, env);

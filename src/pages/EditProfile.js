@@ -19,7 +19,6 @@ const EditProfile = () => {
             }
 
             try {
-                console.log("ENV CHECK:", env);
                 console.log("Fetching profile for user:", user.id, "type:", typeof user.id);
                 const profileResponse = await fetch(`/api/profile/${user.id}`);
                 console.log("profile response:", profileResponse);
