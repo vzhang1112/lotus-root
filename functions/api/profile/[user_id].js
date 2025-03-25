@@ -10,7 +10,7 @@ export async function onRequest({ request, params, env }) {
   if (request.method === 'GET') {
     const { data, error } = await getProfile(userId, env);
     if (error) {
-      return new Response(JSON.stringify({ success: false, error: error.message }), {
+      return new Response(JSON.stringify({ success: false, error: error.message || 'Unknown error'}), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       });

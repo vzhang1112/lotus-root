@@ -22,6 +22,12 @@ const EditProfile = () => {
                 console.log("Fetching profile for user:", user.id, "type:", typeof user.id);
                 const profileResponse = await fetch(`/api/profile/${user.id}`);
                 console.log("profile response:", profileResponse);
+
+                if (!profileResponse.ok) {
+                    const text = await profileResponse.text(); // Try to read the error response safely
+                    throw new Error(`Failed to fetch profile: ${profileResponse.status} ${text}`);
+                  }
+                  
                 const contentType = profileResponse.headers.get('Content-Type');
                 console.log("get content type:", contentType);
                 const profileResult = await profileResponse.json();

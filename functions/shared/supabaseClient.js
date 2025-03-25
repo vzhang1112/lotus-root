@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
 export function createSupabase(env) {
-    return createClient(env.REACT_APP_SUPABASE_URL, env.REACT_APP_SUPABASE_ANON_KEY);
+    return createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
 }
 
 export const getCurrentUser = async () => {
