@@ -9,20 +9,20 @@ export async function onRequest({ request, params, env }) {
   console.log('userId type:', typeof userId);
   console.log("ENV CHECK:", env);
 
-  return new Response(
-    JSON.stringify({
-      success: true,
-      fake: true,
-      receivedId: userId,
-    }),
-    {
-      headers: { 'Content-Type': 'application/json' },
-    }
-  );
+  // return new Response(
+  //   JSON.stringify({
+  //     success: true,
+  //     fake: true,
+  //     receivedId: userId,
+  //   }),
+  //   {
+  //     headers: { 'Content-Type': 'application/json' },
+  //   }
+  // );
 
   if (request.method === 'GET') {
-    console.log("Running Supabase profile query for userId:", userId);
     const { data, error } = await getProfile(userId, env);
+    console.log("Running Supabase get profile query for userId:", userId);
     if (error) {
       return new Response(JSON.stringify({ success: false, error: error.message || 'Unknown error'}), {
         status: 500,
