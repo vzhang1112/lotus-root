@@ -1,12 +1,13 @@
 import { createSupabase } from '../supabaseClient.js';
 
 export async function getProfile(userId, env) {
+  console.log('getProfile called with:', userId);
   const supabase = createSupabase(env);
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
     .eq('user_id', userId);
-    
+
   console.log("Supabase query result:", data, error);
   return { data, error };
 }
