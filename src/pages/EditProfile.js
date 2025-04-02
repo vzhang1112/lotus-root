@@ -45,6 +45,7 @@ const EditProfile = () => {
                     throw new Error("server did not return valid json");
                 }
                 console.log("Profile result:", profileResult);
+                console.log("Profile result data:", profileResult.data);
 
                 if (profileResult.success && profileResult.data) {
                     setProfileData(profileResult.data);
