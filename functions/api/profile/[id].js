@@ -3,10 +3,22 @@ import {
   updateProfile
 } from '../../shared/models/profileModel.js';
 export async function onRequest({ request, params, env }) {
+  console.log("📣 [id].js has been called!");
   const userId = params.id;
   console.log('userId', userId);
   console.log('userId type:', typeof userId);
   console.log("ENV CHECK:", env);
+
+  return new Response(
+    JSON.stringify({
+      success: true,
+      fake: true,
+      receivedId: userId,
+    }),
+    {
+      headers: { 'Content-Type': 'application/json' },
+    }
+  );
 
   if (request.method === 'GET') {
     console.log("Running Supabase profile query for userId:", userId);
