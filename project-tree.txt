@@ -1,0 +1,88 @@
+.
+├── functions
+│   ├── api
+│   │   ├── affiliation
+│   │   │   ├── [id].js
+│   │   │   └── index.js
+│   │   ├── profile
+│   │   │   ├── [user_id].js
+│   │   │   └── index.js
+│   │   ├── referenceRequest
+│   │   │   └── index.js
+│   │   └── user
+│   │       ├── [id].js
+│   │       └── index.js
+│   └── shared
+│       ├── models
+│       │   ├── affiliationModel.js
+│       │   ├── profileModel.js
+│       │   ├── referenceRequestModel.js
+│       │   └── userModel.js
+│       ├── supabaseClient.js
+│       └── tools
+│           └── getFromSupabase.js
+├── install_nvm.sh
+├── logs
+│   ├── dailies
+│   │   ├── 50109.md
+│   │   └── 50120.md
+│   └── general_breakdown.md
+├── package-lock.json
+├── package.json
+├── project-tree.txt
+├── public
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── favicon-48x48.png
+│   ├── favicon-64x64.png
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── manifest.json
+│   └── robots.txt
+├── src
+│   ├── App.js
+│   ├── App.test.js
+│   ├── components
+│   │   ├── Auth.js
+│   │   ├── AuthForm.js
+│   │   ├── ForgotPassword.js
+│   │   ├── NavBar.js
+│   │   ├── NavLinks.js
+│   │   ├── ProfileCard.js
+│   │   ├── ProfileForm.js
+│   │   ├── ProtectedRoute.js
+│   │   ├── ResetPassword.js
+│   │   └── VerifyEmailRedirect.js
+│   ├── context
+│   │   └── AuthContext.js
+│   ├── index.html
+│   ├── index.js
+│   ├── input.css
+│   ├── logo.svg
+│   ├── output.css
+│   ├── pages
+│   │   ├── EditProfile.js
+│   │   ├── EmailVerification.js
+│   │   ├── Home.js
+│   │   ├── LandingPage.js
+│   │   ├── Login.js
+│   │   ├── Profile.js
+│   │   ├── ProfileInitialization.js
+│   │   └── Signup.js
+│   ├── reportWebVitals.js
+│   ├── service-worker.js
+│   ├── serviceWorkerRegistration.js
+│   ├── services
+│   │   └── apiService.js
+│   ├── setupTests.js
+│   ├── styles
+│   └── utils
+│       ├── constants.ts
+│       ├── navigationUtils.js
+│       ├── profileUtils.js
+│       ├── supabaseClient.js
+│       ├── supabaseUtils.js
+│       └── validationUtils.js
+└── wrangler.toml
+
+20 directories, 66 files

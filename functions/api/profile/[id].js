@@ -3,12 +3,13 @@ import {
   updateProfile
 } from '../../shared/models/profileModel.js';
 export async function onRequest({ request, params, env }) {
-  const userId = params.user_id;
+  const userId = params.id;
   console.log('userId', userId);
   console.log('userId type:', typeof userId);
   console.log("ENV CHECK:", env);
 
   if (request.method === 'GET') {
+    console.log("Running Supabase profile query for userId:", userId);
     const { data, error } = await getProfile(userId, env);
     if (error) {
       return new Response(JSON.stringify({ success: false, error: error.message || 'Unknown error'}), {

@@ -22,6 +22,7 @@ const EditProfile = () => {
             try {
                 console.log("Fetching profile for user:", user.id, "type:", typeof user.id);
                 const profileResponse = await fetch(`/api/profile/${user.id}`);
+                console.log("just made request to:", `/api/profile/${user.id}`);
                 console.log("raw response object:", profileResponse);
 
                 if (!profileResponse.ok) {
