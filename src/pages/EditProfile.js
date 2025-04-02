@@ -12,6 +12,7 @@ const EditProfile = () => {
 
     useEffect(() => {
         const fetchProfile = async () => {
+            console.log("user inside fetchprofile: ", user);
             if (!user) {
                 setError("User not authenticated");
                 setLoading(false);
@@ -21,7 +22,7 @@ const EditProfile = () => {
             try {
                 console.log("Fetching profile for user:", user.id, "type:", typeof user.id);
                 const profileResponse = await fetch(`/api/profile/${user.id}`);
-                console.log("profile response:", profileResponse);
+                console.log("raw response object:", profileResponse);
 
                 if (!profileResponse.ok) {
                     const text = await profileResponse.text(); // Try to read the error response safely
@@ -30,7 +31,19 @@ const EditProfile = () => {
                   
                 const contentType = profileResponse.headers.get('Content-Type');
                 console.log("get content type:", contentType);
-                const profileResult = await profileResponse.json();
+
+                const text = await profileResponse.text();
+                console.log("raw response body:", text);
+                // const profileResult = await profileResponse.json();
+
+                let profileResult;
+                try {
+                    profileResult = JSON.parse(text);
+                    console.log("parsed json:", profileResult);
+                } catch (err) {
+                    console.error("failed to parse json:", err.message);
+                    throw new Error("server did not return valid json");
+                }
                 console.log("Profile result:", profileResult);
 
                 if (profileResult.success && profileResult.data) {
