@@ -6,7 +6,8 @@ export async function getProfile(userId, env) {
     .from('profiles')
     .select('*')
     .eq('user_id', userId);
-
+    
+  console.log("Supabase query result:", data, error);
   return { data, error };
 }
 

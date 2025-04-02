@@ -5,6 +5,7 @@ import {
 export async function onRequest({ request, params, env }) {
   const userId = params.user_id;
   console.log('userId', userId);
+  console.log('userId type:', typeof userId);
   console.log("ENV CHECK:", env);
 
   if (request.method === 'GET') {
