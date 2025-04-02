@@ -3,8 +3,8 @@ import {
   updateProfile
 } from '../../shared/models/profileModel.js';
 export async function onRequest({ request, params, env }) {
-  console.log("📣 [id].js has been called!");
-  const userId = params.id;
+  console.log("📣 [user_id].js has been called!");
+  const userId = params.user_id;
   console.log('userId', userId);
   console.log('userId type:', typeof userId);
   console.log("ENV CHECK:", env);
